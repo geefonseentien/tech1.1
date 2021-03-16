@@ -1,0 +1,316 @@
+/* Variabelen voor paddings, kleuren etc. */
+/* Variabelen voor paddings, kleuren etc. */
+/* Responsive variables */
+* {
+  margin: 0;
+  padding: 0; }
+
+header {
+  position: absolute;
+  width: 100%;
+  z-index: 8; }
+  header.account-header a {
+    color: #000; }
+  header.account-header p {
+    font-weight: 900; }
+  header section a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 900; }
+  header section:first-of-type {
+    position: absolute;
+    left: 16px;
+    top: 25px; }
+  header section:last-of-type {
+    position: absolute;
+    right: 16px;
+    top: 25px; }
+    header section:last-of-type a:first-of-type {
+      margin-right: 20px; }
+  @media (min-width: 768px) {
+    header.account-header a {
+      color: #fff; }
+    header.account-header p {
+      color: #fff; }
+    header section:first-of-type {
+      left: 25px; }
+    header section:last-of-type {
+      right: 25px; } }
+
+main.background_img {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-image: url("../img/wintersport-background.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center; }
+
+main.background_img-2 {
+  min-width: auto;
+  min-height: auto;
+  background-image: none;
+  display: block;
+  justify-content: unset; }
+  main.background_img-2 .overlay {
+    display: none; }
+
+main.background_404 {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-image: url("https://media1.tenor.com/images/c61527b51ca2ffcdb5bdcda00a04e2bd/tenor.gif?itemid=14767833");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  main.background_404 section {
+    background-color: #fff;
+    position: relative;
+    z-index: 4;
+    padding: 4em 2em 4em 2em;
+    margin: 0 1em 0 1em;
+    text-align: center; }
+    main.background_404 section h1 {
+      color: #000;
+      margin-bottom: 1em; }
+    main.background_404 section p {
+      font-weight: 500;
+      margin-bottom: 1em; }
+      main.background_404 section p:last-of-type {
+        margin-bottom: 0; }
+
+main section {
+  position: relative;
+  z-index: 4;
+  padding: 6em 1em 1em 1em; }
+  main section h1 {
+    font-weight: 900;
+    color: #fff;
+    font-size: 1.8em; }
+  main section h2 {
+    font-weight: 900;
+    color: #fff;
+    font-size: 1.4em; }
+  main section form input, main section form select {
+    padding: 0.75em;
+    color: #92a1a9;
+    font-size: 1em;
+    border: 1px solid #92a1a9; }
+  main section.search h2 {
+    margin-bottom: 1.5em; }
+  main section.search form {
+    display: grid; }
+    main section.search form input, main section.search form select {
+      margin-bottom: 1.5em;
+      background-color: #fff;
+      width: -webkit-fill-available; }
+    main section.search form input[type=submit] {
+      background-color: #ed2924;
+      border-radius: 20px;
+      color: #fff;
+      border: none; }
+  main section.register {
+    width: 100%; }
+    main section.register h1 {
+      margin-bottom: 0.3em; }
+    main section.register div {
+      padding: 2em 1.5em;
+      background-color: #fff; }
+      main section.register div p:first-of-type {
+        font-weight: 900;
+        margin-bottom: 0.75em; }
+    main section.register form {
+      padding: 2em 1.5em;
+      background-color: #fff; }
+      main section.register form section {
+        padding: 0; }
+        main section.register form section div {
+          padding: 0;
+          margin-bottom: 2em; }
+      main section.register form input {
+        display: block;
+        font-size: 1em;
+        padding: 0.75em;
+        border: 1px solid #92a1a9;
+        width: -webkit-fill-available;
+        margin-bottom: 2em; }
+        main section.register form input:last-of-type {
+          margin-bottom: 0; }
+      main section.register form label {
+        display: block;
+        font-weight: 900;
+        margin-bottom: 0.75em; }
+      main section.register form input[type=submit] {
+        background-color: #ed2924;
+        margin-right: 0;
+        margin-left: auto;
+        border-radius: 20px;
+        color: #fff;
+        border: none;
+        max-width: 200px; }
+  main section.account h1 {
+    color: #000;
+    margin-bottom: 1em; }
+  main section.account form section {
+    padding: 0; }
+    main section.account form section div {
+      padding: 0;
+      margin-bottom: 2em; }
+  main section.account form input {
+    display: block;
+    font-size: 1em;
+    padding: 0.75em;
+    border: 1px solid #92a1a9;
+    width: -webkit-fill-available;
+    margin-bottom: 2em; }
+    main section.account form input:last-of-type {
+      margin-bottom: 0; }
+  main section.account form label {
+    display: block;
+    font-weight: 900;
+    margin-bottom: 0.75em; }
+  main section.account form input[type=submit] {
+    background-color: #92a1a9;
+    margin-right: 0;
+    border-radius: 20px;
+    color: #fff;
+    border: none;
+    margin-bottom: 1em; }
+  main section.account form select {
+    margin-bottom: 2em; }
+  main section.account form:last-of-type input[type=submit] {
+    background-color: #ed2924; }
+
+@media (min-width: 768px) {
+  main.background_img-2 {
+    min-width: 100vw;
+    min-height: 100vh;
+    background-image: url("../img/wintersport-background2.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center; }
+    main.background_img-2 .overlay {
+      display: block; }
+  main section {
+    max-width: 1080px;
+    padding: 0; }
+    main section h1 {
+      font-size: 2.8em; }
+    main section h2 {
+      font-size: 2.4em; }
+    main section.register {
+      margin-top: 50px;
+      width: auto; }
+      main section.register form {
+        min-width: 500px; }
+        main section.register form section {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-gap: 20px; }
+    main section.search {
+      margin-top: 100px; }
+      main section.search h1, main section.search h2 {
+        text-align: center; }
+      main section.search h2 {
+        margin-bottom: 2em; }
+      main section.search form {
+        display: block; }
+        main section.search form input, main section.search form select {
+          width: auto;
+          min-width: 200px;
+          margin-left: -6px;
+          margin-bottom: 0; }
+          main section.search form input:focus, main section.search form select:focus {
+            outline: none; }
+          main section.search form input:hover, main section.search form select:hover {
+            cursor: pointer; }
+        main section.search form select {
+          padding: 0.77em;
+          border-radius: 5px 0 0 5px; }
+        main section.search form input[type=date] {
+          padding: 0.64em;
+          border-radius: 0 5px 5px 0; }
+        main section.search form input[type=submit] {
+          margin-left: 0.75em; }
+    main section.account {
+      margin: 50px 0 2em 0;
+      width: auto; }
+      main section.account h1 {
+        display: none; }
+      main section.account h2 {
+        margin-bottom: 0.75em; }
+      main section.account form {
+        min-width: 500px;
+        background-color: #fff;
+        padding: 1.5em; }
+        main section.account form section {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-gap: 20px; }
+        main section.account form:last-of-type {
+          padding: 0 1.5em 1.5em 1.5em; }
+        main section.account form input[type=submit] {
+          margin-bottom: 0;
+          max-width: 250px;
+          margin-right: 0;
+          margin-left: auto; }
+      main section.account:last-of-type input[type=submit] {
+        margin-bottom: 0; } }
+
+section.active_users {
+  padding: 2em 1em 2em 1em; }
+  section.active_users h3 {
+    flex-basis: 100%;
+    text-align: center;
+    font-weight: 900;
+    margin-bottom: 1em; }
+  section.active_users div {
+    padding: 1em; }
+    section.active_users div article {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-row-gap: 75px; }
+      section.active_users div article li {
+        list-style: none;
+        text-align: center; }
+        section.active_users div article li:last-of-type {
+          margin-bottom: 0; }
+        section.active_users div article li img {
+          max-width: 100px;
+          border-radius: 50%;
+          margin-bottom: 0.75em; }
+  @media (min-width: 768px) {
+    section.active_users {
+      max-width: 1080px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 0 auto; }
+      section.active_users div article {
+        grid-column-gap: 100px;
+        grid-template-columns: 1fr 1fr 1fr; } }
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+  opacity: .2;
+  margin-bottom: 0;
+  max-width: 100%;
+  z-index: 3; }
+
+footer {
+  background-color: #08ADC0;
+  color: #fff;
+  padding: 4em;
+  text-align: center; }
+  footer p {
+    font-weight: 900; }
