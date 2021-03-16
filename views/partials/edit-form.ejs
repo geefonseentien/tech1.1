@@ -1,0 +1,45 @@
+<form action="/account/update" method="POST">
+    <section>
+        <div>
+            <input type="hidden" name="userID" value="<%= userInfo.userID %>">
+            <label for="name">(voor)naam</label>
+            <input type="text" name="name" id="name" value="<%= userInfo.name %>">
+        </div>
+        <div>
+            <label for="age">leeftijd</label>
+            <input type="text" name="age" id="age" value="<%= userInfo.age %>">
+        </div>
+    </section>
+    <label for="email">e-mail</label>
+    <input type="email" name="email" id="email" value="<%= userInfo.email %>">
+    <label for="password">wachtwoord</label>
+    <input type="password" name="password" id="password" value="<%= userInfo.password %>">
+
+    <label for="area">wintersport gebied</label>
+    <input type="area" name="area" id="area" value="<%= userInfo.area %>">
+    <label for="date">datum van verblijf</label>
+    <input type="date" name="date" value="<%= userInfo.date %>">
+    <section>
+        <div>
+            <label for="gender">ik ben een</label>
+            <select name="myGender" id="myGender">
+                <option selected="selected">
+                    <%= userInfo.myGender %>
+                </option>
+                <option value="man">man</option>
+                <option value="vrouw">vrouw</option>
+            </select>
+        </div>
+        <div>
+            <label for="gender">op zoek naar een</label>
+            <select name="searchGender" id="searchGender">
+                <option selected="selected">
+                    <%= userInfo.searchGender %>
+                </option>
+                <option value="man">man</option>
+                <option value="vrouw">vrouw</option>
+            </select>
+        </div>
+    </section>
+    <input type="submit" value="account veranderen">
+</form>

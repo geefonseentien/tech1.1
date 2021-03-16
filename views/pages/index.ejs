@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body>
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+    <main class="background_img">
+        <section class="search">
+            <h1>Nooit meer alleen zijn tijdens je wintersport,</h1>
+            <h2>Vind jou perfecte match voor de apres ski!</h2>
+            <%- include('../partials/search-form'); %>
+        </section>
+        <div class="overlay"></div>
+    </main>
+    <section class="active_users">
+        <h3>Actieve gebruikers</h3>
+        <div>
+            <article>
+                <% users.forEach(function(users) { %>
+                    <li>
+                        <img src="../../img/no-user.png" alt="no user image">
+                        <p><%= users.name %></p>
+                    </li>
+                <% }) %>
+            </article>
+        </div>
+    </section>
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body>
+    <header class="account-header">
+        <%- include('../partials/account-header'); %>
+    </header>
+    <main class="background_img-2">
+        <% if (userInfo) { %>
+            <section class="account">
+                <h1>Hoi <%= userInfo.name %>!</h1>
+                <h2>Account instellingen</h2>
+                <%- include('../partials/edit-form'); %>
+                    <%- include('../partials/delete-form'); %>
+            </section>
+        <% } %>
+        <div class="overlay"></div>
+    </main>
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+</body>
+</html>
