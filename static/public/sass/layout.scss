@@ -1,0 +1,427 @@
+@import 'var.scss';
+@import 'mixins.scss';
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    position: absolute;
+    width: 100%;
+    z-index: 8;
+    &.account-header{
+        a{
+            color: $black;
+        }
+        p{
+           font-weight: 900; 
+        }
+    }
+    section{
+        a{
+            color: $white;
+            text-decoration: none;
+            font-weight: 900;
+        }
+        &:first-of-type{
+            position: absolute;
+            left: 16px;
+            top: 25px;
+        }
+        &:last-of-type{
+            position: absolute;
+            right: 16px;
+            top: 25px;
+            a{
+                &:first-of-type{
+                    margin-right: 20px;
+                }
+            }
+        }
+    }
+    @include breakpoint(small-desktop){
+        &.account-header{
+            a{
+                color: $white;
+            }
+            p{
+                color: $white;
+            }
+        }
+        section{
+            &:first-of-type{
+                left: 25px;
+            }
+            &:last-of-type{
+                right: 25px;
+            }
+        }
+    }
+}
+
+main{
+    &.background_img{
+        min-width: 100vw;
+        min-height: 100vh;
+        background-image: url('../img/wintersport-background.jpg');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+    }
+    &.background_img-2{
+        min-width: auto;
+        min-height: auto;
+        background-image: none;
+        display: block;
+        justify-content: unset;
+        .overlay{
+            display: none;
+        }
+    }
+    &.background_404{
+        min-width: 100vw;
+        min-height: 100vh;
+        background-image: url('https://media1.tenor.com/images/c61527b51ca2ffcdb5bdcda00a04e2bd/tenor.gif?itemid=14767833');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        section{
+            background-color: $white;
+            position: relative;
+            z-index: 4;
+            padding: 4em $huge-padding 4em $huge-padding;
+            margin: 0 $medium-padding 0 $medium-padding;
+            text-align: center;
+            h1{
+                color: $black;
+                margin-bottom: $medium-padding;
+            }
+            p{
+                font-weight: 500;
+                margin-bottom: $medium-padding;
+                &:last-of-type{
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+    section{
+        position: relative;
+        z-index: 4;
+        padding: 6em $medium-padding $medium-padding $medium-padding;
+        h1{
+            font-weight: 900;
+            color: $white;
+            font-size: 1.8em;
+        }
+        h2{
+            font-weight: 900;
+            color: $white;
+            font-size: 1.4em;
+        }
+        form{
+            input, select{
+                padding: $small-padding;
+                color: $grey;
+                font-size: 1em;
+                border: 1px solid $grey;
+            }
+        }
+        &.search{
+            h2{
+                margin-bottom: $large-padding;
+            }
+            form{
+                display: grid;
+                input, select{
+                    margin-bottom: $large-padding;
+                    background-color: $white;
+                    width: -webkit-fill-available;
+                }
+                input[type=submit]{
+                    background-color: $red;
+                    border-radius: 20px;
+                    color: $white;
+                    border: none;
+                }
+            }
+        }
+        &.register{
+            width: 100%;
+            h1{
+                margin-bottom: 0.3em;
+            }
+            div{
+                padding: $huge-padding $large-padding;
+                background-color: $white;
+                p{
+                    &:first-of-type{
+                        font-weight: 900;
+                        margin-bottom: $small-padding;
+                    }
+                }
+            }
+            form{
+                padding: $huge-padding $large-padding;
+                background-color: $white;
+                section{
+                    padding: 0;
+                    div{
+                        padding: 0;
+                        margin-bottom: 2em;
+                    }
+                }
+                input{
+                    display: block;
+                    font-size: 1em;
+                    padding: $small-padding;
+                    border: 1px solid $grey;
+                    width: -webkit-fill-available;
+                    margin-bottom: $huge-padding;
+                    &:last-of-type{
+                        margin-bottom: 0;
+                    }
+                }
+                label{
+                    display: block;
+                    font-weight: 900;
+                    margin-bottom: $small-padding;
+                }
+                input[type=submit]{
+                    background-color: $red;
+                    margin-right: 0;
+                    margin-left: auto;
+                    border-radius: 20px;
+                    color: $white;
+                    border: none;
+                    max-width: 200px;
+                }
+            }
+        }
+        &.account{
+            h1{
+                color: $black;
+                margin-bottom: $medium-padding;
+            }
+            form{
+                section{
+                    padding: 0;
+                    div{
+                        padding: 0;
+                        margin-bottom: 2em;
+                    }
+                }
+                input{
+                    display: block;
+                    font-size: 1em;
+                    padding: $small-padding;
+                    border: 1px solid $grey;
+                    width: -webkit-fill-available;
+                    margin-bottom: $huge-padding;
+                    &:last-of-type{
+                        margin-bottom: 0;
+                    }
+                }
+                label{
+                    display: block;
+                    font-weight: 900;
+                    margin-bottom: $small-padding;
+                }
+                input[type=submit]{
+                    background-color: $grey;
+                    margin-right: 0;
+                    border-radius: 20px;
+                    color: $white;
+                    border: none;
+                    margin-bottom: $medium-padding;
+                }
+                select{
+                    margin-bottom: $huge-padding;
+                }
+                &:last-of-type{
+                    input[type=submit]{
+                        background-color: $red;
+                    }
+                }
+            }
+        }
+    }
+    @include breakpoint(small-desktop){
+        &.background_img-2{
+            min-width: 100vw;
+            min-height: 100vh;
+            background-image: url('../img/wintersport-background2.jpg');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            .overlay{
+                display: block;
+            }
+        }
+        section{
+            max-width: $site-width;
+            padding: 0;
+            h1{
+                font-size: 2.8em;
+            }
+            h2{
+                font-size: 2.4em;
+            }
+            &.register{
+                margin-top: 50px;
+                width: auto;
+                form{
+                    min-width: 500px;
+                    section{
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        grid-gap: 20px;
+                    }
+                }
+            }
+            &.search{
+                margin-top: 100px;
+                h1, h2{
+                    text-align: center;
+                }
+                h2{
+                    margin-bottom: $huge-padding;
+                }
+                form{
+                    display: block;
+                    input, select{
+                        width: auto;
+                        min-width: 200px;
+                        margin-left: -6px;
+                        margin-bottom: 0;
+                        &:focus{
+                            outline: none;
+                        }
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+                    select{
+                        padding: 0.77em;
+                        border-radius: 5px 0 0 5px;
+                    }
+                    input[type=date]{
+                        padding: 0.64em;
+                        border-radius: 0 5px 5px 0;
+                    }
+                    input[type=submit]{
+                        margin-left: $small-padding;
+                    }
+                }
+            }
+            &.account{
+                margin: 50px 0 $huge-padding 0;
+                width: auto;
+                h1{
+                    display: none;
+                }
+                h2{
+                    margin-bottom: $small-padding;
+                }
+                form{
+                    min-width: 500px;
+                    background-color: $white;
+                    padding: $large-padding;
+                    section{
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        grid-gap: 20px;
+                    }
+                    &:last-of-type{
+                        padding: 0 $large-padding $large-padding $large-padding;
+                    }
+                    input[type=submit]{
+                        margin-bottom: 0;
+                        max-width: 250px;
+                        margin-right: 0;
+                        margin-left: auto;
+                    }
+                }
+                &:last-of-type{
+                    input[type=submit]{
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+section.active_users{
+    padding: $huge-padding $medium-padding $huge-padding $medium-padding;
+    h3{
+        flex-basis: 100%;
+        text-align: center;
+        font-weight: 900;
+        margin-bottom: $medium-padding;
+    }
+    div{
+        padding: $medium-padding;
+        article{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-row-gap: 75px;
+            li{
+                list-style: none;
+                text-align: center;
+                &:last-of-type{
+                    margin-bottom: 0;
+                }
+                img{
+                    max-width: 100px;
+                    border-radius: 50%;
+                    margin-bottom: $small-padding;
+                }
+            }
+        }
+    }
+    @include breakpoint(small-desktop){
+        max-width: $site-width;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        div{
+            article{
+                grid-column-gap: 100px;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+    }
+}
+
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $black;
+    opacity: .2;
+    margin-bottom: 0;
+    max-width: 100%;
+    z-index: 3;
+}
+
+footer{
+    background-color: $blue;
+    color: $white;
+    padding: 4em;
+    text-align: center;
+    p{
+        font-weight: 900;
+    }
+}
