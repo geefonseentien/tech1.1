@@ -14,6 +14,6 @@ app.use(express.static(path.join(__dirname, 'static/public')))
 // router files, hier gebruiken we de router functie van express
 app.use('/', router)
 
-app.listen(port, function (req, res) {
+app.listen(port, (req, res) => {
     console.log(`Matching-application listening at http://localhost:${port}`)
 })
