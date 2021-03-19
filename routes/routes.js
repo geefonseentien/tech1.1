@@ -57,7 +57,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // home pagina
 
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
 
     const db = client.db(dbName)
 
@@ -72,12 +72,12 @@ router.get('/', function (req, res) {
 
 
 // renderen van pagina register
-router.get('/register', urlencodedParser, function (req, res) {
+router.get('/register', urlencodedParser, (req, res) => {
     res.render('pages/register')
 })
 
 // Data naar de database inserten
-router.post('/account', urlencodedParser, function (req, res) {
+router.post('/account', urlencodedParser, (req, res) => {
     const userInfo = {
         userID: ObjectID().toString(), // maakt een nieuw ObjectID aan en zet deze om in een string (voor het vinden van de gebruiker bij update)
         name: req.body.name,
@@ -98,7 +98,7 @@ router.post('/account', urlencodedParser, function (req, res) {
 // login pagina
 
 
-router.get('/login', function (req, res) {
+router.get('/login', (req, res) => {
     res.render('pages/login')
 })
 
@@ -121,7 +121,7 @@ router.post('/login', urlencodedParser, async (req, res) => {
 
 
 // update route
-router.post('/account/update', urlencodedParser, function (req, res) {
+router.post('/account/update', urlencodedParser, (req, res) => {
     const userInfo = {
         userID: req.body.userID,
         name: req.body.name,
@@ -146,7 +146,7 @@ router.post('/account/update', urlencodedParser, function (req, res) {
 
 
 // delete route
-router.post('/account/delete', urlencodedParser, function (req, res) {
+router.post('/account/delete', urlencodedParser, (req, res) => {
     const userInfo = {
         userID: req.body.userID
     }
@@ -163,7 +163,7 @@ router.post('/account/delete', urlencodedParser, function (req, res) {
 
 
 // 404 page
-router.get('*', function (req, res) {
+router.get('*', (req, res) => {
     res.render('pages/404')
 });
 

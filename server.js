@@ -24,6 +24,6 @@ app.use(
 }),
 )
 
-app.listen(port, function (req, res) {
+app.listen(port, (req, res) => {
     console.log(`Matching-application listening at http://localhost:${port}`)
 })
