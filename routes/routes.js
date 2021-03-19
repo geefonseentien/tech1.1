@@ -8,7 +8,30 @@ const url = process.env.MONGODB_URL
 const client = new MongoClient(url, { useUnifiedTopology: true })
 const ObjectID = require('mongodb').ObjectID
 
+router.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        name: process.env.SESSION_NAME,
+        resave: false,
+        saveUninitialized: true,
+}),
+)
 
+// const gaNaarLogin = (req, res, next) => {
+//     if(!req.session.userID) {
+//         res.redirect('pages/login')
+//     } else {
+//         next()
+//     }
+// }
+
+// const gaNaarDashboard = (req, res, next) => {
+//     if(req.session.userID) {
+//         res.redirect('pages/dashboard')
+//     } else {
+//         next()
+//     }
+// }
 
 // Database
 const dbName = process.env.DB_NAME
@@ -45,7 +68,6 @@ router.get('/', function (req, res) {
 })
 
 
-
 // register pagina
 
 
@@ -73,7 +95,6 @@ router.post('/account', urlencodedParser, function (req, res) {
 })
 
 
-
 // login pagina
 
 
@@ -81,6 +102,22 @@ router.get('/login', function (req, res) {
     res.render('pages/login')
 })
 
+router.post('/login', urlencodedParser, async (req, res) => {
+    const db = client.db(dbName)
+    let emailadres = req.body.email
+    let passwordPost = req.body.password
+    try {
+        const user = await db.collection('users').findOne({email: emailadres})
+        console.log(user)
+        if(user.password == passwordPost) {
+            console.log("wachtwoord klopt")
+        } else {
+            console.log("wachtwoord klopt niet")
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 
 // update route
@@ -102,7 +139,7 @@ router.post('/account/update', urlencodedParser, function (req, res) {
     // update de gebruiker met het aangemakkte userID
     db.collection('users').updateOne({ 'userID': req.body.userID }, { $set: userInfo }, function () {
         console.log(userInfo.name, 'geupdate')
-        res.render('pages/account', { userInfo: userInfo })
+        res.render('pages/like')
     })
 })
 
