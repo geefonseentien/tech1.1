@@ -8,31 +8,6 @@ const url = process.env.MONGODB_URL
 const client = new MongoClient(url, { useUnifiedTopology: true })
 const ObjectID = require('mongodb').ObjectID
 
-router.use(
-    session({
-        secret: process.env.SESSION_SECRET,
-        name: process.env.SESSION_NAME,
-        resave: false,
-        saveUninitialized: true,
-}),
-)
-
-// const gaNaarLogin = (req, res, next) => {
-//     if(!req.session.userID) {
-//         res.redirect('pages/login')
-//     } else {
-//         next()
-//     }
-// }
-
-// const gaNaarDashboard = (req, res, next) => {
-//     if(req.session.userID) {
-//         res.redirect('pages/dashboard')
-//     } else {
-//         next()
-//     }
-// }
-
 // Database
 const dbName = process.env.DB_NAME
 
@@ -53,7 +28,36 @@ run().catch(console.dir)
 // urlencodedParser variabele, middleware
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
+// Session logica
+router.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        name: process.env.SESSION_NAME,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            originalmaxAge: process.env.SESSION_LIFETIME,
+            samesite: true,
+            secure: false
+        }
+}),
+)
 
+const gaNaarLogin = (req, res, next) => {
+    if(!req.session.userID) {
+        res.redirect('/login')
+    } else {
+        next()
+    }
+}
+
+const gaNaarLiken = (req, res, next) => {
+    if(req.session.userID) {
+        res.redirect('/dashboard')
+    } else {
+        next()
+    }
+}
 
 // home pagina
 
@@ -67,6 +71,25 @@ router.get('/', (req, res) => {
     })
 })
 
+
+router.get('/dashboard', gaNaarLogin, async (req, res) => {
+
+    const db = client.db(dbName)
+
+    // het vinden van alle gebruikers in de collectie users, deze worden op de homepagina gerenderd
+    db.collection('users').find().toArray(function (err, users) {
+        res.render('pages/dashboard', { users: users })
+    })
+    // try {
+    //     const allUsers = await findAllPeopleNotVisited()
+    //     const firstUser = allUsers[0]
+    //     const userID = allUsers[0].id
+    //     res.render('dashboard', {
+    //         firstUser,
+    //         userID,
+    //     })
+    // }
+})
 
 // register pagina
 
@@ -98,7 +121,7 @@ router.post('/account', urlencodedParser, (req, res) => {
 // login pagina
 
 
-router.get('/login', (req, res) => {
+router.get('/login', gaNaarLiken, async (req, res) => {
     res.render('pages/login')
 })
 
@@ -111,6 +134,8 @@ router.post('/login', urlencodedParser, async (req, res) => {
         console.log(user)
         if(user.password == passwordPost) {
             console.log("wachtwoord klopt")
+            req.session.userID = user.userID
+            return res.redirect('/dashboard')
         } else {
             console.log("wachtwoord klopt niet")
         }
