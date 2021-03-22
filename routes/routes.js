@@ -1,7 +1,10 @@
 const express = require('express')
 const router = express.Router()
+
 const bodyParser = require('body-parser')
+
 const bcrypt = require('bcrypt')
+
 const { MongoClient } = require('mongodb')
 require('dotenv').config()
 const url = process.env.MONGODB_URL
@@ -56,12 +59,13 @@ router.get('/register', urlencodedParser, (req, res) => {
 
 // Data naar de database inserten
 router.post('/account', urlencodedParser, (req, res) => {
+    const hash = bcrypt.hashSync(req.body.password, 10);
     const userInfo = {
         userID: ObjectID().toString(), // maakt een nieuw ObjectID aan en zet deze om in een string (voor het vinden van de gebruiker bij update)
         name: req.body.name,
         email: req.body.email,
         age: req.body.age,
-        password: req.body.password
+        password: hash
     }
 
     const db = client.db(dbName)
@@ -85,12 +89,13 @@ router.get('/login', (req, res) => {
 
 // update route
 router.post('/account/update', urlencodedParser, (req, res) => {
+    const hash = bcrypt.hashSync(req.body.password, 10);
     const userInfo = {
         userID: req.body.userID,
         name: req.body.name,
         email: req.body.email,
         age: req.body.age,
-        password: req.body.password,
+        password: hash,
         area: req.body.area,
         date: req.body.date,
         myGender: req.body.myGender,
