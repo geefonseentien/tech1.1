@@ -151,7 +151,7 @@ router.post('/sendMail', urlencodedParser, function (req, res) {
                     service: 'gmail',
                     auth: {
                         type: 'OAuth2',
-                        user: 'chrisalza28@gmail.com',
+                        user: 'supahkeil.dating@gmail.com',
                         clientId: clientId,
                         clientSecret: clientSecret,
                         refreshToken: refreshToken,
