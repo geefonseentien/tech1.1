@@ -5,6 +5,10 @@ const path = require('path')
 const port = process.env.PORT || 2999
 const router = require('./routes/routes.js')
 
+//require('./routes/mailFunctie/mail.js')
+
+
+
 // ejs view engine
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))

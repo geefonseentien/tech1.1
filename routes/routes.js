@@ -3,9 +3,10 @@ const session = require('express-session')
 const router = express.Router()
 
 const bodyParser = require('body-parser')
+const nodemailer = require('nodemailer')
+const { google } = require('googleapis')
 
 const bcrypt = require('bcrypt')
-
 const { MongoClient } = require('mongodb')
 require('dotenv').config()
 const url = process.env.MONGODB_URL
@@ -124,8 +125,6 @@ router.post('/account', urlencodedParser, (req, res) => {
 
 
 // login pagina
-
-
 router.get('/login', gaNaarLiken, async (req, res) => {
     res.render('pages/login')
 })
@@ -191,6 +190,67 @@ router.post('/account/delete', urlencodedParser, (req, res) => {
     })
 })
 
+
+//google api keys en tokens
+const clientId = process.env.CLIENT_ID
+const clientSecret = process.env.CLIENT_SECRET
+const redirectUrl = process.env.REDIRECT_URI
+const refreshToken = process.env.REFRESH_TOKEN
+
+//oauth2 authenticatie
+const oAuth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUrl)
+
+oAuth2Client.setCredentials({refresh_token: refreshToken})
+
+//email verzenden met parameters
+router.post('/sendMail', urlencodedParser, function (req, res) {
+
+    var fromMail = req.body.fromMail
+    var toMail = req.body.toMail
+    var personalMsg = req.body.personalMsg
+
+    if(fromMail && toMail && personalMsg) {
+
+        async function sendMail() {
+            try{
+                const accessToken = await oAuth2Client.getAccessToken()
+
+                const transport = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        type: 'OAuth2',
+                        user: 'chrisalza28@gmail.com',
+                        clientId: clientId,
+                        clientSecret: clientSecret,
+                        refreshToken: refreshToken,
+                        accessToken: accessToken
+                    }
+                })
+
+                const mailOptions = {
+                    form: fromMail,
+                    to: toMail,
+                    subject: 'Hallo vanaf gmail',
+                    text: personalMsg,
+                    html: '<h1>' + personalMsg + '</h1>',
+                }
+
+                const result = await transport.sendMail(mailOptions)
+
+                return result
+
+            }catch(error){
+                return error
+            }
+        }
+
+        sendMail().then(result => res.send(result)).catch(error => res.send(error))
+    }else{
+        res.send({
+            error: 'Niet genoeg parameters om te voltooien.'
+        })
+    }
+})
 
 
 // 404 page
