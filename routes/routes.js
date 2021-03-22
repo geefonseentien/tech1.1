@@ -1,7 +1,11 @@
 const express = require('express')
 const session = require('express-session')
 const router = express.Router()
+
 const bodyParser = require('body-parser')
+
+const bcrypt = require('bcrypt')
+
 const { MongoClient } = require('mongodb')
 require('dotenv').config()
 const url = process.env.MONGODB_URL
@@ -11,7 +15,7 @@ const ObjectID = require('mongodb').ObjectID
 // Database
 const dbName = process.env.DB_NAME
 
-async function run() {
+const run = async () => {
     try {
         await client.connect()
         console.log('Connected correctly to server')
@@ -66,7 +70,7 @@ router.get('/', (req, res) => {
     const db = client.db(dbName)
 
     // het vinden van alle gebruikers in de collectie users, deze worden op de homepagina gerenderd
-    db.collection('users').find().toArray(function (err, users) {
+    db.collection('users').find().toArray( (err, users) => {
         res.render('pages/index', { users: users })
     })
 })
@@ -101,17 +105,18 @@ router.get('/register', urlencodedParser, (req, res) => {
 
 // Data naar de database inserten
 router.post('/account', urlencodedParser, (req, res) => {
+    const hash = bcrypt.hashSync(req.body.password, 10);
     const userInfo = {
         userID: ObjectID().toString(), // maakt een nieuw ObjectID aan en zet deze om in een string (voor het vinden van de gebruiker bij update)
         name: req.body.name,
         email: req.body.email,
         age: req.body.age,
-        password: req.body.password
+        password: hash
     }
 
     const db = client.db(dbName)
 
-    db.collection('users').insertOne(userInfo, function () {
+    db.collection('users').insertOne(userInfo, () => {
         console.log(userInfo.name, 'toegevoegd')
     })
     res.render('pages/account', { userInfo: userInfo })
@@ -147,12 +152,13 @@ router.post('/login', urlencodedParser, async (req, res) => {
 
 // update route
 router.post('/account/update', urlencodedParser, (req, res) => {
+    const hash = bcrypt.hashSync(req.body.password, 10);
     const userInfo = {
         userID: req.body.userID,
         name: req.body.name,
         email: req.body.email,
         age: req.body.age,
-        password: req.body.password,
+        password: hash,
         area: req.body.area,
         date: req.body.date,
         myGender: req.body.myGender,
@@ -162,7 +168,7 @@ router.post('/account/update', urlencodedParser, (req, res) => {
     const db = client.db(dbName)
 
     // update de gebruiker met het aangemakkte userID
-    db.collection('users').updateOne({ 'userID': req.body.userID }, { $set: userInfo }, function () {
+    db.collection('users').updateOne({ 'userID': req.body.userID }, { $set: userInfo }, () => {
         console.log(userInfo.name, 'geupdate')
         res.render('pages/like')
     })
@@ -179,7 +185,7 @@ router.post('/account/delete', urlencodedParser, (req, res) => {
     const db = client.db(dbName)
 
     // verwijder de gerbuiker met het aangemaakte userID
-    db.collection('users').deleteOne({ 'userID': req.body.userID }, function () {
+    db.collection('users').deleteOne({ 'userID': req.body.userID }, () => {
         console.log(userInfo.userID, 'deleted')
         res.render('pages/delete-succes', { userInfo: userInfo })
     })
