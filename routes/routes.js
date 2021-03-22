@@ -76,7 +76,6 @@ router.post('/account', urlencodedParser, function (req, res) {
 
 // login pagina
 
-
 router.get('/login', function (req, res) {
     res.render('pages/login')
 })
