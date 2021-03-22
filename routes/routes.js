@@ -48,7 +48,7 @@ router.use(
 }),
 )
 
-const gaNaarLogin = (req, res, next) => {
+const redirectToLogin = (req, res, next) => {
     if(!req.session.userID) {
         res.redirect('/login')
     } else {
@@ -56,7 +56,7 @@ const gaNaarLogin = (req, res, next) => {
     }
 }
 
-const gaNaarLiken = (req, res, next) => {
+const redirectToLike = (req, res, next) => {
     if(req.session.userID) {
         res.redirect('/dashboard')
     } else {
@@ -77,7 +77,7 @@ router.get('/', (req, res) => {
 })
 
 
-router.get('/dashboard', gaNaarLogin, async (req, res) => {
+router.get('/dashboard', redirectToLogin, async (req, res) => {
 
     const db = client.db(dbName)
 
@@ -125,7 +125,7 @@ router.post('/account', urlencodedParser, (req, res) => {
 
 
 // login pagina
-router.get('/login', gaNaarLiken, async (req, res) => {
+router.get('/login', redirectToLike, async (req, res) => {
     res.render('pages/login')
 })
 
