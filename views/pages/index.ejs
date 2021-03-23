@@ -21,8 +21,13 @@
             <article>
                 <% users.forEach(function(users) { %>
                     <li>
-                        <img src="../../img/no-user.png" alt="no user image">
-                        <p><%= users.name %></p>
+                        <% if(users.img){ %>
+                            <img src="../../uploads/images/<%= users.img %>" alt="user image">
+                            <p><%= users.name %></p>
+                        <% } else{ %>  
+                            <img src="../../img/no-user.png" alt="no user image">
+                            <p><%= users.name %></p>
+                        <% } %>
                     </li>
                 <% }) %>
             </article>

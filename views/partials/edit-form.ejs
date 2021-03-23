@@ -1,4 +1,4 @@
-<form action="/account/update" method="POST">
+<form action="/account/update" method="POST" enctype="multipart/form-data">
     <section>
         <div>
             <input type="hidden" name="userID" value="<%= userInfo.userID %>">
@@ -10,10 +10,12 @@
             <input type="text" name="age" id="age" value="<%= userInfo.age %>">
         </div>
     </section>
+    <label for="file">profiel foto</label>
+    <input type="file" name="picture" accept="image/*" />
     <label for="email">e-mail</label>
     <input type="email" name="email" id="email" value="<%= userInfo.email %>">
-    <label for="password">wachtwoord</label>
-    <input type="password" name="password" id="password" value="<%= userInfo.password %>">
+    <!-- <label for="password">wachtwoord</label>
+    <input type="password" name="password" id="password"> -->
 
     <label for="area">wintersport gebied</label>
     <input type="area" name="area" id="area" value="<%= userInfo.area %>">
