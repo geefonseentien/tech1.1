@@ -4,8 +4,11 @@ const router = express.Router()
 
 const bodyParser = require('body-parser')
 const multer = require('multer')
-const bcrypt = require('bcrypt')
 
+const nodemailer = require('nodemailer')
+const { google, redis_v1 } = require('googleapis')
+
+const bcrypt = require('bcrypt')
 const { MongoClient } = require('mongodb')
 require('dotenv').config()
 const url = process.env.MONGODB_URL
@@ -70,7 +73,7 @@ router.use(
 }),
 )
 
-const gaNaarLogin = (req, res, next) => {
+const redirectToLogin = (req, res, next) => {
     if(!req.session.userID) {
         res.redirect('/login')
     } else {
@@ -78,7 +81,7 @@ const gaNaarLogin = (req, res, next) => {
     }
 }
 
-const gaNaarLiken = (req, res, next) => {
+const redirectToLike = (req, res, next) => {
     if(req.session.userID) {
         res.redirect('/dashboard')
     } else {
@@ -96,26 +99,6 @@ router.get('/', (req, res) => {
     db.collection('users').find().toArray( (err, users) => {
         res.render('pages/index', { users: users })
     })
-})
-
-
-router.get('/dashboard', gaNaarLogin, async (req, res) => {
-
-    const db = client.db(dbName)
-
-    // het vinden van alle gebruikers in de collectie users, deze worden op de homepagina gerenderd
-    db.collection('users').find().toArray(function (err, users) {
-        res.render('pages/dashboard', { users: users })
-    })
-    // try {
-    //     const allUsers = await findAllPeopleNotVisited()
-    //     const firstUser = allUsers[0]
-    //     const userID = allUsers[0].id
-    //     res.render('dashboard', {
-    //         firstUser,
-    //         userID,
-    //     })
-    // }
 })
 
 // register pagina
@@ -147,9 +130,7 @@ router.post('/account', urlencodedParser, (req, res) => {
 
 
 // login pagina
-
-
-router.get('/login', gaNaarLiken, async (req, res) => {
+router.get('/login', redirectToLike, async (req, res) => {
     res.render('pages/login')
 })
 
@@ -184,6 +165,21 @@ router.post('/login', urlencodedParser, async (req, res) => {
     }
 })
 
+//logout
+
+router.get('/logout', redirectToLogin, (req, res) =>{
+    res.render('pages/dashboard')
+})
+
+router.post('/logout', async (req, res) => {
+    req.session.destroy(error => {
+        if (error) {
+            return res.redirect('/dashboard')
+        }
+        res.clearCookie(process.env.SESSION_NAME)
+        res.redirect('/')
+    })
+})
 
 // update route
 router.post('/account/update', upload.single('picture'), urlencodedParser, (req, res) => {
@@ -227,6 +223,78 @@ router.post('/account/delete', urlencodedParser, (req, res) => {
     })
 })
 
+
+// dashboard pagina
+router.get('/dashboard', redirectToLogin, async (req, res) => {
+
+    const db = client.db(dbName)
+    
+
+    db.collection('users').find().toArray( (err, users) => {
+        res.render('pages/dashboard', { users: users, userID: users.userID })
+    })
+})
+
+//google api keys en tokens
+const clientId = process.env.CLIENT_ID
+const clientSecret = process.env.CLIENT_SECRET
+const redirectUrl = process.env.REDIRECT_URI
+const refreshToken = process.env.REFRESH_TOKEN
+
+//oauth2 authenticatie
+const oAuth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUrl)
+
+oAuth2Client.setCredentials({refresh_token: refreshToken})
+
+//email verzenden met parameters
+router.post('/sendMail', urlencodedParser, function (req, res) {
+
+    var fromMail = req.body.fromMail
+    var toMail = req.body.toMail
+    var personalMsg = req.body.personalMsg
+
+    if(fromMail && toMail && personalMsg) {
+
+        async function sendMail() {
+            try{
+                const accessToken = await oAuth2Client.getAccessToken()
+
+                const transport = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        type: 'OAuth2',
+                        user: 'chrisalza28@gmail.com',
+                        clientId: clientId,
+                        clientSecret: clientSecret,
+                        refreshToken: refreshToken,
+                        accessToken: accessToken
+                    }
+                })
+
+                const mailOptions = {
+                    form: fromMail,
+                    to: toMail,
+                    subject: 'Hallo vanaf gmail',
+                    text: personalMsg,
+                    html: '<h1>' + personalMsg + '</h1>',
+                }
+
+                const result = await transport.sendMail(mailOptions)
+
+                return result
+
+            }catch(error){
+                return error
+            }
+        }
+
+        sendMail().then(result => res.send(result)).catch(error => res.send(error))
+    }else{
+        res.send({
+            error: 'Niet genoeg parameters om te voltooien.'
+        })
+    }
+})
 
 
 // 404 page
