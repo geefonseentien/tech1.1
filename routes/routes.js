@@ -3,6 +3,8 @@ const session = require('express-session')
 const router = express.Router()
 
 const bodyParser = require('body-parser')
+const multer = require('multer')
+
 const nodemailer = require('nodemailer')
 const { google, redis_v1 } = require('googleapis')
 
@@ -32,6 +34,29 @@ run().catch(console.dir)
 
 // urlencodedParser variabele, middleware
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+
+
+// Opslaan voor afbeeldingen in de upload map
+const storage = multer.diskStorage({
+    // Locatie aanwijzen
+    destination: (req, file, callback) => {
+        callback(null, './static/public/uploads/images')
+    },
+    // Naam van de file opmaken
+    filename: (req, file, callback) => {
+        callback(null, Date.now() + '-' + file.originalname)
+    }
+  })
+   
+const upload = multer({ 
+    storage: storage,
+    limits:{
+        fieldSize:1024*1024*3
+    }
+})
+
+
 
 // Session logica
 router.use(
@@ -86,7 +111,7 @@ router.get('/register', urlencodedParser, (req, res) => {
 
 // Data naar de database inserten
 router.post('/account', urlencodedParser, (req, res) => {
-    const hash = bcrypt.hashSync(req.body.password, 10);
+    const hash = bcrypt.hashSync(req.body.password, 10)
     const userInfo = {
         userID: ObjectID().toString(), // maakt een nieuw ObjectID aan en zet deze om in een string (voor het vinden van de gebruiker bij update)
         name: req.body.name,
@@ -113,18 +138,30 @@ router.post('/login', urlencodedParser, async (req, res) => {
     const db = client.db(dbName)
     let emailadres = req.body.email
     let passwordPost = req.body.password
-    try {
-        const user = await db.collection('users').findOne({email: emailadres})
-        // console.log(user)
-        if(user.password == passwordPost) {
-            console.log("wachtwoord klopt")
-            req.session.userID = user.userID
-            return res.redirect('/dashboard')
-        } else {
-            console.log("wachtwoord klopt niet")
+    if (emailadres && passwordPost) {
+        try {
+            const user = await db.collection('users').findOne({
+                email: emailadres
+            }, async (err, user) => {
+                if (!user) {
+                    console.log('Geen gebruiker gevonden')
+                    res.send({ errorMsg: 'Geen user gevonden' })
+                } else {
+                    await bcrypt.compare(passwordPost, user.password, (err, result) => {
+                        if (result) {
+                            console.log('gebruiker is ingelogd')
+                            req.session.userID = user.userID
+                            return res.redirect('/dashboard')
+                          } else {
+                            console.log('wachtwoord klopt niet')
+                            res.send({ errorMsg: 'User gevonden maar wachtwoord incorrect' })
+                          }
+                    })
+                }
+            })
+        } catch (error) {
+            console.log(error)
         }
-    } catch (error) {
-        console.log(error)
     }
 })
 
@@ -145,14 +182,15 @@ router.post('/logout', async (req, res) => {
 })
 
 // update route
-router.post('/account/update', urlencodedParser, (req, res) => {
-    const hash = bcrypt.hashSync(req.body.password, 10);
+router.post('/account/update', upload.single('picture'), urlencodedParser, (req, res) => {
+    // const hash = bcrypt.hashSync(req.body.password, 10)
     const userInfo = {
         userID: req.body.userID,
         name: req.body.name,
         email: req.body.email,
+        img: req.file.filename,
         age: req.body.age,
-        password: hash,
+        // password: hash,
         area: req.body.area,
         date: req.body.date,
         myGender: req.body.myGender,
@@ -164,7 +202,7 @@ router.post('/account/update', urlencodedParser, (req, res) => {
     // update de gebruiker met het aangemakkte userID
     db.collection('users').updateOne({ 'userID': req.body.userID }, { $set: userInfo }, () => {
         console.log(userInfo.name, 'geupdate')
-        res.render('pages/dashboard')
+        res.render('pages/account', { userInfo: userInfo })
     })
 })
 
