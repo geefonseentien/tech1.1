@@ -4,7 +4,7 @@ const router = express.Router()
 
 const bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
-const { google } = require('googleapis')
+const { google, redis_v1 } = require('googleapis')
 
 const bcrypt = require('bcrypt')
 const { MongoClient } = require('mongodb')
