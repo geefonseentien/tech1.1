@@ -76,26 +76,6 @@ router.get('/', (req, res) => {
     })
 })
 
-
-router.get('/dashboard', redirectToLogin, async (req, res) => {
-
-    const db = client.db(dbName)
-
-    // het vinden van alle gebruikers in de collectie users, deze worden op de homepagina gerenderd
-    db.collection('users').find().toArray(function (err, users) {
-        res.render('pages/dashboard', { users: users })
-    })
-    // try {
-    //     const allUsers = await findAllPeopleNotVisited()
-    //     const firstUser = allUsers[0]
-    //     const userID = allUsers[0].id
-    //     res.render('dashboard', {
-    //         firstUser,
-    //         userID,
-    //     })
-    // }
-})
-
 // register pagina
 
 
@@ -135,7 +115,7 @@ router.post('/login', urlencodedParser, async (req, res) => {
     let passwordPost = req.body.password
     try {
         const user = await db.collection('users').findOne({email: emailadres})
-        console.log(user)
+        // console.log(user)
         if(user.password == passwordPost) {
             console.log("wachtwoord klopt")
             req.session.userID = user.userID
@@ -148,6 +128,21 @@ router.post('/login', urlencodedParser, async (req, res) => {
     }
 })
 
+//logout
+
+router.get('/logout', redirectToLogin, (req, res) =>{
+    res.render('pages/dashboard')
+})
+
+router.post('/logout', async (req, res) => {
+    req.session.destroy(error => {
+        if (error) {
+            return res.redirect('/dashboard')
+        }
+        res.clearCookie(process.env.SESSION_NAME)
+        res.redirect('/')
+    })
+})
 
 // update route
 router.post('/account/update', urlencodedParser, (req, res) => {
@@ -190,6 +185,17 @@ router.post('/account/delete', urlencodedParser, (req, res) => {
     })
 })
 
+
+// dashboard pagina
+router.get('/dashboard', redirectToLogin, async (req, res) => {
+
+    const db = client.db(dbName)
+    
+
+    db.collection('users').find().toArray( (err, users) => {
+        res.render('pages/dashboard', { users: users, userID: users.userID })
+    })
+})
 
 //google api keys en tokens
 const clientId = process.env.CLIENT_ID
