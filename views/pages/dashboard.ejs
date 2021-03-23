@@ -13,11 +13,14 @@
             <h3>Vind nu je Apres Ski maatje</h3>
             <div>
                 <article>
-                    <% users.forEach(function(users) { %>
+                    <% users.forEach((users, index) => { %>
                         <li>
                             <img src="../../img/no-user.png" alt="no user image">
                             <p><%= users.name %></p>
-                            <%- include('../partials/like-form'); %>
+                            <form action="/like" method="POST">
+                                <input type="hidden" name="userID" value="<%= users.userID %>">
+                                <input type="submit" value="like">
+                            </form>
                         </li>
                     <% }) %>
                 </article>
