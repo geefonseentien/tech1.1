@@ -117,7 +117,8 @@ router.post('/account', urlencodedParser, (req, res) => {
         name: req.body.name,
         email: req.body.email,
         age: req.body.age,
-        password: hash
+        password: hash,
+        liked: []
     }
 
     const db = client.db(dbName)
@@ -228,11 +229,28 @@ router.post('/account/delete', urlencodedParser, (req, res) => {
 router.get('/dashboard', redirectToLogin, async (req, res) => {
 
     const db = client.db(dbName)
-    
 
-    db.collection('users').find().toArray( (err, users) => {
-        res.render('pages/dashboard', { users: users, userID: users.userID })
+    db.collection('users').find({ userID: {$ne: req.session.userID}}).toArray( (err, users) => {
+        res.render('pages/dashboard', { users: users, userID: req.session.userID })
     })
+})
+
+router.post('/like', urlencodedParser, (req, res) => {
+    const userInfo = {
+        liked: req.body.userID
+    }
+    console.log(userInfo.liked)
+    const db = client.db(dbName)
+
+    db.collection('users').updateOne({ userID: req.session.userID }, { $push: {'liked': userInfo.liked}}, (error, succes) => {
+        if (succes) {
+            console.log(succes)
+        } else {
+            console.log(error)
+        }
+        console.log('toegevoegd')
+    })
+    res.redirect('/dashboard')
 })
 
 //google api keys en tokens
