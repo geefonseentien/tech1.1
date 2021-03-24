@@ -15,12 +15,22 @@
                 <article>
                     <% users.forEach((users, index) => { %>
                         <li>
-                            <img src="../../img/no-user.png" alt="no user image">
-                            <p><%= users.name %></p>
+                            <% if(users.img){ %>
+                                <img src="../../uploads/images/<%= users.img %>" alt="user image">
+                                <p><%= users.name %></p>
                             <form action="/like" method="POST">
                                 <input type="hidden" name="userID" value="<%= users.userID %>">
                                 <input type="submit" value="like">
                             </form>
+                            <% } else{ %>  
+                                <img src="../../img/no-user.png" alt="no user image">
+                                <p><%= users.name %></p>
+                            <form action="/like" method="POST">
+                                <input type="hidden" name="userID" value="<%= users.userID %>">
+                                <input type="submit" value="like">
+                            </form>
+                            <% } %>
+                            
                         </li>
                     <% }) %>
                 </article>
