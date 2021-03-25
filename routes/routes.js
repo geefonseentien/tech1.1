@@ -45,7 +45,7 @@ router.use(
             samesite: true,
             secure: false
         }
-}),
+    }),
 )
 
 const gaNaarLogin = (req, res, next) => {
@@ -203,54 +203,53 @@ const oAuth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUrl)
 oAuth2Client.setCredentials({refresh_token: refreshToken})
 
 //email verzenden met parameters
-router.post('/sendMail', urlencodedParser, function (req, res) {
+router.post('/sendMail', urlencodedParser, (req, res) => {
 
-    var fromMail = req.body.fromMail
-    var toMail = req.body.toMail
-    var personalMsg = req.body.personalMsg
+        let fromMail = req.body.fromMail
+        let toMail = req.body.toMail
+        let personalMsg = req.body.personalMsg
 
-    if(fromMail && toMail && personalMsg) {
+        if (fromMail && toMail && personalMsg) {
 
-        async function sendMail() {
-            try{
-                const accessToken = await oAuth2Client.getAccessToken()
+            async function sendMail() {
+                try {
+                    let accessToken = await oAuth2Client.getAccessToken()
 
-                const transport = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                        type: 'OAuth2',
-                        user: 'supahkeil.dating@gmail.com',
-                        clientId: clientId,
-                        clientSecret: clientSecret,
-                        refreshToken: refreshToken,
-                        accessToken: accessToken
+                    let transport = nodemailer.createTransport({
+                        service: 'gmail',
+                        auth: {
+                            type: 'OAuth2',
+                            user: 'supahkeil.dating@gmail.com',
+                            clientId: clientId,
+                            clientSecret: clientSecret,
+                            refreshToken: refreshToken,
+                            accessToken: accessToken
+                        }
+                    })
+
+                    let mailOptions = {
+                        form: fromMail,
+                        to: toMail,
+                        subject: 'Hallo vanaf gmail',
+                        text: personalMsg,
+                        html: '<h1>' + personalMsg + '</h1>',
                     }
-                })
 
-                const mailOptions = {
-                    form: fromMail,
-                    to: toMail,
-                    subject: 'Hallo vanaf gmail',
-                    text: personalMsg,
-                    html: '<h1>' + personalMsg + '</h1>',
+                    let result = await transport.sendMail(mailOptions)
+
+                    return result
+
+                } catch (error) {
+                    return error
                 }
-
-                const result = await transport.sendMail(mailOptions)
-
-                return result
-
-            }catch(error){
-                return error
             }
+            sendMail().then(result => res.send(result)).catch(error => res.send(error))
+        } else {
+            res.send({
+                error: 'Niet genoeg parameters om te voltooien.'
+            })
         }
-
-        sendMail().then(result => res.send(result)).catch(error => res.send(error))
-    }else{
-        res.send({
-            error: 'Niet genoeg parameters om te voltooien.'
-        })
-    }
-})
+    })
 
 
 // 404 page
@@ -261,3 +260,4 @@ router.get('*', (req, res) => {
 
 // export de module zodat we hem weer kunnen gebruiker in server.js
 module.exports = router;
+
