@@ -10,6 +10,7 @@ const { google, redis_v1 } = require('googleapis')
 
 const bcrypt = require('bcrypt')
 const { MongoClient } = require('mongodb')
+const { userInfo } = require('os')
 require('dotenv').config()
 const url = process.env.MONGODB_URL
 const client = new MongoClient(url, { useUnifiedTopology: true })
@@ -251,6 +252,40 @@ router.post('/like', urlencodedParser, (req, res) => {
         console.log('toegevoegd')
     })
     res.redirect('/dashboard')
+})
+
+
+
+// geliked pagina
+router.get('/geliked', (req, res) => {
+
+    const db = client.db(dbName)
+
+
+    db.collection('users').findOne({userID: req.session.userID}, (err, doc) => {
+        // console.log(doc.liked)
+        let likedArray = [
+
+        ]
+        // doc.liked.forEach( () => {
+        //     likedArray.push({userID: doc.liked[0]})
+        // })
+        for (i=0; i<doc.liked.length; i++) {
+            // console.log('Hallo')
+            likedArray.push(doc.liked[i])
+        }
+        console.log(likedArray)
+        // res.render('pages/geliked', { users: doc, userID: req.session.userID})
+        db.collection('users').aggregate({$match: {'userID': {$in: likedArray}}}).toArray ((err, doc) => {
+            if(doc){
+                console.log(doc)
+            }else {
+            console.log(err)
+            }
+            // res.render('pages/geliked', { users: doc, userID: req.session.userID})
+        })
+    })
+    
 })
 
 //google api keys en tokens
