@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body>
+    <main class="background_404">
+        <section>
+            <h1>502, that's an error.</h1>
+            <p>De server heeft een tijdelijke fout aangetroffen en kon uw verzoek niet voltooien.</p>
+            <p>U word automatisch terug gestuurd naar de homepagina.</p>
+        </section>
+        <div class="overlay"></div>
+    </main>
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+    <script>
+        setTimeout( () => {
+            window.location = '/';
+        }, 5000)
+    </script>
+</body>
+</html>

@@ -110,7 +110,7 @@ router.get('/register', urlencodedParser, (req, res) => {
 })
 
 // Data naar de database inserten
-router.post('/account', urlencodedParser, (req, res) => {
+router.post('/account', urlencodedParser, async (req, res) => {
     const hash = bcrypt.hashSync(req.body.password, 10)
     const userInfo = {
         userID: ObjectID().toString(), // maakt een nieuw ObjectID aan en zet deze om in een string (voor het vinden van de gebruiker bij update)
@@ -123,10 +123,25 @@ router.post('/account', urlencodedParser, (req, res) => {
 
     const db = client.db(dbName)
 
-    db.collection('users').insertOne(userInfo, () => {
-        console.log(userInfo.name, 'toegevoegd')
-    })
-    res.render('pages/account', { userInfo: userInfo })
+    try{
+        await db.collection('users').findOne({
+            email: req.body.email
+        }, async (err, user) => {
+            if (!user) {
+                db.collection('users').insertOne(userInfo, async () => {
+                    console.log(userInfo.name, 'toegevoegd')
+                })
+                res.render('pages/account', { userInfo: userInfo })
+            } else{
+                console.log('e-mailadres al in gebruik')
+                err_msg = "e-mailadres al in gebruik."
+                return res.render('pages/register', { err_msg: err_msg } )
+            }
+        })
+    } catch(err){
+        console.error(err)
+        res.render('pages/502')
+    }
 })
 
 
@@ -145,8 +160,9 @@ router.post('/login', urlencodedParser, async (req, res) => {
                 email: emailadres
             }, async (err, user) => {
                 if (!user) {
-                    console.log('Geen gebruiker gevonden')
-                    res.send({ errorMsg: 'Geen user gevonden' })
+                    console.log('Geen gebruiker gevonden met dit e-mailadres')
+                    err_msg = "Geen gebruiker gevonden met dit e-mailadres"
+                    return res.render('pages/login', { err_msg: err_msg } )
                 } else {
                     await bcrypt.compare(passwordPost, user.password, (err, result) => {
                         if (result) {
@@ -154,8 +170,9 @@ router.post('/login', urlencodedParser, async (req, res) => {
                             req.session.userID = user.userID
                             return res.redirect('/dashboard')
                           } else {
-                            console.log('wachtwoord klopt niet')
-                            res.send({ errorMsg: 'User gevonden maar wachtwoord incorrect' })
+                            console.log('Wachtwoord komt niet overeen met het e-mailadres.')
+                            err_msg = "Wachtwoord komt niet overeen met het e-mailadres."
+                            return res.render('pages/login', { err_msg: err_msg } )
                           }
                     })
                 }
@@ -201,10 +218,15 @@ router.post('/account/update', upload.single('picture'), urlencodedParser, (req,
     const db = client.db(dbName)
 
     // update de gebruiker met het aangemakkte userID
-    db.collection('users').updateOne({ 'userID': req.body.userID }, { $set: userInfo }, () => {
-        console.log(userInfo.name, 'geupdate')
+    try{
+        db.collection('users').updateOne({ 'userID': req.body.userID }, { $set: userInfo }, async () => {
+            console.log(userInfo.name, 'geupdate')
+        })
         res.render('pages/account', { userInfo: userInfo })
-    })
+    } catch(err){
+        console.error(err)
+        res.render('pages/502')
+    }
 })
 
 
@@ -318,8 +340,7 @@ router.post('/sendMail', urlencodedParser, function (req, res) {
 // 404 page
 router.get('*', (req, res) => {
     res.render('pages/404')
-});
-
+})
 
 // export de module zodat we hem weer kunnen gebruiker in server.js
-module.exports = router;
+module.exports = router
