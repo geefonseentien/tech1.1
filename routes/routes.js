@@ -257,32 +257,23 @@ router.post('/like', urlencodedParser, (req, res) => {
 
 
 // geliked pagina
-router.get('/geliked', (req, res) => {
+router.get('/geliked', redirectToLogin, (req, res) => {
 
     const db = client.db(dbName)
 
 
     db.collection('users').findOne({userID: req.session.userID}, (err, doc) => {
-        // console.log(doc.liked)
-        let likedArray = [
-
-        ]
-        // doc.liked.forEach( () => {
-        //     likedArray.push({userID: doc.liked[0]})
-        // })
+        let likedArray = []
         for (i=0; i<doc.liked.length; i++) {
-            // console.log('Hallo')
             likedArray.push(doc.liked[i])
         }
-        console.log(likedArray)
-        // res.render('pages/geliked', { users: doc, userID: req.session.userID})
-        db.collection('users').aggregate({$match: {'userID': {$in: likedArray}}}).toArray ((err, doc) => {
+        db.collection('users').aggregate([{$match: {userID: {$in: likedArray}}}]).toArray ((err, doc) => {
             if(doc){
+                res.render('pages/geliked', { users: doc, userID: req.session.userID})
                 console.log(doc)
             }else {
             console.log(err)
             }
-            // res.render('pages/geliked', { users: doc, userID: req.session.userID})
         })
     })
     
