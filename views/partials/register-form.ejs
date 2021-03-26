@@ -12,10 +12,11 @@
     <label for="email">E-mail</label>
     <input type="email" name="email" id="email" placeholder="typ hier je e-mail adres..." required>
     <label for="password">Wachtwoord</label>
-    <input type="password" name="password" id="password-length" placeholder="verzin een sterk wachtwoord..." required>
+    <input type="password" name="password" id="passwordLength" placeholder="verzin een sterk wachtwoord..." required>
     <input type="hidden" name="liked" id="liked" value="">
     <% if(locals.err_msg) { %>
         <div class="login-errorMessage"><%= err_msg %></div>
     <% } %>
-    <input type="submit" value="aanmelden">
+    <div id="error-nwl"></div>
+    <input type="submit" id="freezeButton" value="aanmelden">
 </form>

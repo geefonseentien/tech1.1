@@ -208,6 +208,12 @@ main{
                     margin-bottom: $huge-padding;
                     color: $red;
                 }
+                #error-nwl{
+                    padding: $small-padding;
+                    border: 2px solid $red;
+                    display: none;
+                    margin-bottom: $huge-padding;
+                }
             }
         }
         &.account{

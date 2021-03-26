@@ -112,6 +112,7 @@ router.get('/register', urlencodedParser, (req, res) => {
 // Data naar de database inserten
 router.post('/account', urlencodedParser, async (req, res) => {
     const hash = bcrypt.hashSync(req.body.password, 10)
+    let passwordPost = req.body.password
     const userInfo = {
         userID: ObjectID().toString(), // maakt een nieuw ObjectID aan en zet deze om in een string (voor het vinden van de gebruiker bij update)
         name: req.body.name,

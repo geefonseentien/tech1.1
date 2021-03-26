@@ -156,6 +156,11 @@ main section {
         border: 2px solid #ed2924;
         margin-bottom: 2em;
         color: #ed2924; }
+      main section.register form #error-nwl {
+        padding: 0.75em;
+        border: 2px solid #ed2924;
+        display: none;
+        margin-bottom: 2em; }
   main section.account h1 {
     color: #000;
     margin-bottom: 1em; }
