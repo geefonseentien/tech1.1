@@ -10,3 +10,13 @@
     @media (min-width: 768px) { @content ; }
   }
 }
+
+@mixin buttons() {
+  font-size: 14px;
+  font-weight: normal;
+  background-color: black;
+  color: white;
+  padding: $small-padding;
+  border-radius: 1em;
+  border: none;
+}
