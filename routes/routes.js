@@ -10,6 +10,7 @@ const { google, redis_v1 } = require('googleapis')
 
 const bcrypt = require('bcrypt')
 const { MongoClient } = require('mongodb')
+const { userInfo } = require('os')
 require('dotenv').config()
 const url = process.env.MONGODB_URL
 const client = new MongoClient(url, { useUnifiedTopology: true })
@@ -274,6 +275,31 @@ router.post('/like', urlencodedParser, (req, res) => {
         console.log('toegevoegd')
     })
     res.redirect('/dashboard')
+})
+
+
+
+// geliked pagina
+router.get('/geliked', redirectToLogin, (req, res) => {
+
+    const db = client.db(dbName)
+
+
+    db.collection('users').findOne({userID: req.session.userID}, (err, doc) => {
+        let likedArray = []
+        for (i=0; i<doc.liked.length; i++) {
+            likedArray.push(doc.liked[i])
+        }
+        db.collection('users').aggregate([{$match: {userID: {$in: likedArray}}}]).toArray ((err, doc) => {
+            if(doc){
+                res.render('pages/geliked', { users: doc, userID: req.session.userID})
+                console.log(doc)
+            }else {
+            console.log(err)
+            }
+        })
+    })
+    
 })
 
 //google api keys en tokens
