@@ -9,12 +9,12 @@ passwordLength.addEventListener('keyup', () => {
         message.style.color = succesColor
         message.style.borderColor = succesColor
         message.innerHTML = 'Uw wachtwoord voldoet aan de eisen'
-        freezeButton.classList.remove('disabled');
+        freezeButton.classList.remove('disabled')
     } else {
         message.style.display = 'block'
         message.style.color = errorColor
         message.style.borderColor = errorColor
         message.innerHTML = 'Uw wachtwoord heeft minimaal 8 tekens nodig'
-        freezeButton.classList.add('disabled');
+        freezeButton.classList.add('disabled')
     }
 })
