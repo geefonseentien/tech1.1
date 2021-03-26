@@ -204,7 +204,7 @@ router.post('/account/update', upload.single('picture'), urlencodedParser, (req,
     // update de gebruiker met het aangemakkte userID
     db.collection('users').updateOne({ 'userID': req.body.userID }, { $set: userInfo }, () => {
         console.log(userInfo.name, 'geupdate')
-        res.render('pages/account', { userInfo: userInfo })
+        res.redirect('/login')
     })
 })
 
