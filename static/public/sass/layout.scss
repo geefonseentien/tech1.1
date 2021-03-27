@@ -361,13 +361,25 @@ main{
 }
 
 section.active_users{
-    padding: $huge-padding $medium-padding $huge-padding $medium-padding;
+    padding: $huge-padding $medium-padding;
     h3{
         flex-basis: 100%;
         text-align: center;
         font-weight: 900;
-        margin-bottom: $medium-padding;
+        color: white;
         margin-top: $huge-padding;
+    }
+    a {
+        display: flex;
+        justify-content: flex-end;
+        text-decoration: none;
+        align-items: center;
+        margin-bottom: .4em;
+    }
+    a img {
+        width: 2em;
+        margin-right: 1em;
+        margin-left: 0.4em;
     }
     div{
         padding: $huge-padding;
@@ -375,7 +387,7 @@ section.active_users{
         border-radius: 1em;
         width: 70vw;
         height: auto;
-        margin: 0;
+        margin:  auto;
         article{
             display: grid;
             grid-template-columns: 1fr;
@@ -403,15 +415,34 @@ section.active_users{
                     font-weight: bold;
                     color: rgb(58, 58, 58);
                 }
-                input{
+                #hartje{
                     @include buttons();
-                    background-image: url('../img/hart.jpg');
+                    background-image: url('../img/hartleeg.png');
                     background-color: transparent;
                     background-size: cover;
                     text-indent: -999em;
                     margin: $large-padding ;
-                    width: 5em;
+                    width: 5.3em;
                     height: 4em;
+                }
+                #hartje:active, #hartje:focus {
+                    border: none;
+                    outline: none;
+                }
+                #geliked{
+                    @include buttons();
+                    background-image: url('../img/hartrood.png');
+                    background-color: transparent;
+                    background-size: cover;
+                    text-indent: -999em;
+                    margin: $large-padding ;
+                    width: 5.3em;
+                    height: 4em;
+                    z-index: 10;
+                }
+                #geliked:active, #hartje:focus {
+                    border: none;
+                    outline: none;
                 }
             }
         }
@@ -433,35 +464,21 @@ section.active_users{
 
 section.buttons{
     display: flex;
-    flex-direction: row;
-    a, input{
-        @include buttons();
-        font-size: 10px;
+    flex-direction: column-reverse;
+    input{
+        background: none;
+        border: none;
+        color: white;
+        font-family: 'Quicksand', sans-serif;
+        font-weight: 900;
+        margin-bottom: 1em;
     }
-    a {
-        background-color: $red;
-        margin-right: 0;
-    }
-
-}
-
-.overlay{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    // background-color: $black;
-    // opacity: .2;
-    margin-bottom: 0;
-    max-width: 100%;
-    z-index: 3;
 }
 
 footer{
     background-color: $blue;
     color: $white;
-    padding: 4em;
+    padding: 2em;
     text-align: center;
     p{
         font-weight: 900;

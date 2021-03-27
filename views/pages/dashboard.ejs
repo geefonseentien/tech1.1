@@ -11,6 +11,7 @@
         <div class="overlay"></div>
         <section class="active_users">
             <h3>Vind nu je Apres Ski maatje</h3>
+            <a id="" href="/geliked">Liked<img src="../img/hartrood.png" alt=""></a>
             <div>
                 <article>
                     <% users.forEach((users, index) => { %>
@@ -20,18 +21,18 @@
                                 <p><%= users.name %></p>
                                 <p><strong>Leeftijd:</strong> <%= users.age %></p>
                                 <p><strong>Gebied:</strong> <%= users.area %></p>
-                            <form action="/like" method="POST">
+                            <form id="like" action="/like" method="POST">
                                 <input type="hidden" name="userID" value="<%= users.userID %>">
-                                <input type="submit" value="LIKE ME">
+                                <input id="hartje" type="submit" value="LIKE ME">
                             </form>
                             <% } else{ %>  
                                 <img src="../../img/no-user.png" alt="no user image">
                                 <p><%= users.name %></p>
                                 <p><strong>Leeftijd:</strong> <%= users.age %></p>
                                 <p><strong>Gebied:</strong> <%= users.area %></p>
-                            <form action="/like" method="POST">
+                            <form id="like" action="/like" method="POST">
                                 <input type="hidden" name="userID" value="<%= users.userID %>">
-                                <input type="submit" value="LIKE ME">
+                                <input id="hartje" type="submit" value="LIKE ME">
                             </form>
                             <% } %>
                             
@@ -40,6 +41,7 @@
                 </article>
             </div>
         </section>
+        <script src="../js/script.js"></script>
     </main>
     <footer>
         <%- include('../partials/footer'); %>

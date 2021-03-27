@@ -13,10 +13,10 @@
 
 @mixin buttons() {
   font-size: 14px;
-  font-weight: normal;
+  // font-weight: normal;
   background-color: black;
   color: white;
-  padding: $small-padding;
+  padding: $extraSmall-padding $small-padding;
   border-radius: 1em;
   border: none;
 }
