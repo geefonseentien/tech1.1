@@ -2,3 +2,8 @@
 @import 'type.scss';
 @import 'mixins.scss';
 @import 'var.scss';
+
+.disabled{
+    pointer-events: none;
+    background-color: #cccccc!important;
+}
