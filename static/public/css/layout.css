@@ -100,18 +100,23 @@ main section {
     font-size: 1em;
     border: 1px solid #92a1a9; }
   main section.search h2 {
-    margin-bottom: 1.5em; }
-  main section.search form {
-    display: grid; }
-    main section.search form input, main section.search form select {
-      margin-bottom: 1.5em;
+    margin-bottom: 150px; }
+  main section.search div a {
+    padding: 1em 2em;
+    background-color: #ed2924;
+    max-width: 200px;
+    text-align: center;
+    border-radius: 30px;
+    color: #fff;
+    display: block;
+    text-decoration: none;
+    margin: 0 auto 1.5em auto;
+    font-weight: 900;
+    box-shadow: 0px 10px 15px -2px rgba(0, 0, 0, 0.62); }
+    main section.search div a:last-of-type {
       background-color: #fff;
-      width: -webkit-fill-available; }
-    main section.search form input[type=submit] {
-      background-color: #ed2924;
-      border-radius: 20px;
-      color: #fff;
-      border: none; }
+      border: 1px solid #92a1a9;
+      color: #000; }
   main section.register {
     width: 100%; }
     main section.register h1 {
@@ -147,10 +152,17 @@ main section {
         background-color: #ed2924;
         margin-right: 0;
         margin-left: auto;
-        border-radius: 20px;
+        border-radius: 30px;
         color: #fff;
         border: none;
-        max-width: 200px; }
+        max-width: 200px;
+        transition: 0.2s; }
+        main section.register form input[type=submit]:hover {
+          transition: 0.2s;
+          background-color: #C3201B; }
+        main section.register form input[type=submit]:active {
+          transition: 0.2s;
+          background-color: #A21B18; }
       main section.register form .login-errorMessage {
         padding: 0.75em;
         border: 2px solid #ed2924;
@@ -185,7 +197,7 @@ main section {
   main section.account form input[type=submit] {
     background-color: #92a1a9;
     margin-right: 0;
-    border-radius: 20px;
+    border-radius: 30px;
     color: #fff;
     border: none;
     margin-bottom: 1em; }
@@ -226,27 +238,27 @@ main section {
       margin-top: 100px; }
       main section.search h1, main section.search h2 {
         text-align: center; }
-      main section.search h2 {
-        margin-bottom: 2em; }
-      main section.search form {
-        display: block; }
-        main section.search form input, main section.search form select {
-          width: auto;
-          min-width: 200px;
-          margin-left: -6px;
-          margin-bottom: 0; }
-          main section.search form input:focus, main section.search form select:focus {
-            outline: none; }
-          main section.search form input:hover, main section.search form select:hover {
-            cursor: pointer; }
-        main section.search form select {
-          padding: 0.77em;
-          border-radius: 5px 0 0 5px; }
-        main section.search form input[type=date] {
-          padding: 0.64em;
-          border-radius: 0 5px 5px 0; }
-        main section.search form input[type=submit] {
-          margin-left: 0.75em; }
+      main section.search div {
+        display: flex;
+        justify-content: center; }
+        main section.search div a {
+          margin: 0;
+          transition: 0.2s; }
+          main section.search div a:hover {
+            background-color: #C3201B;
+            transition: 0.2s; }
+          main section.search div a:active {
+            background-color: #A21B18;
+            transition: 0.2s; }
+          main section.search div a:last-of-type {
+            margin-left: 20px; }
+            main section.search div a:last-of-type:hover {
+              background-color: #e1e1e1;
+              transition: 0.2s; }
+            main section.search div a:last-of-type:active {
+              background-color: #92a1a9;
+              transition: 0.2s;
+              color: #fff; }
     main section.account {
       margin: 50px 0 2em 0;
       width: auto; }
@@ -268,9 +280,20 @@ main section {
           margin-bottom: 0;
           max-width: 250px;
           margin-right: 0;
-          margin-left: auto; }
-      main section.account:last-of-type input[type=submit] {
-        margin-bottom: 0; } }
+          margin-left: auto;
+          transition: 0.2s; }
+          main section.account form input[type=submit]:hover {
+            cursor: pointer;
+            transition: 0.2s;
+            background-color: #7F8B91; }
+        main section.account form:last-of-type input[type=submit] {
+          margin-bottom: 0; }
+          main section.account form:last-of-type input[type=submit]:hover {
+            transition: 0.2s;
+            background-color: #C3201B; }
+          main section.account form:last-of-type input[type=submit]:active {
+            transition: 0.2s;
+            background-color: #A21B18; } }
 
 section.active_users {
   padding: 2em 1em; }
@@ -299,62 +322,24 @@ section.active_users {
     margin: auto; }
     section.active_users div article {
       display: grid;
-      grid-template-columns: 1fr;
-      grid-row-gap: 25px; }
-      section.active_users div article li {
-        list-style: none;
+      grid-template-columns: 1fr 1fr;
+      grid-row-gap: 75px; }
+      section.active_users div article div {
+        max-width: 150px;
         text-align: center;
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 1em; }
-        section.active_users div article li:last-of-type {
+        overflow: hidden;
+        position: relative; }
+        section.active_users div article div div {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0; }
+        section.active_users div article div:last-of-type {
           margin-bottom: 0; }
-        section.active_users div article li img {
+        section.active_users div article div img {
           width: 100%;
-          max-height: 17em;
-          object-fit: cover;
-          border-radius: 1em; }
-        section.active_users div article li p {
-          margin: 0.75em;
-          color: #747474; }
-        section.active_users div article li p:nth-of-type(1) {
-          font-size: 1.4em;
-          font-weight: bold;
-          color: #3a3a3a; }
-        section.active_users div article li #hartje {
-          font-size: 14px;
-          background-color: black;
-          color: white;
-          padding: 0.5em 0.75em;
-          border-radius: 1em;
-          border: none;
-          background-image: url("../img/hartleeg.png");
-          background-color: transparent;
-          background-size: cover;
-          text-indent: -999em;
-          margin: 1.5em;
-          width: 5.3em;
-          height: 4em; }
-        section.active_users div article li #hartje:active, section.active_users div article li #hartje:focus {
-          border: none;
-          outline: none; }
-        section.active_users div article li #geliked {
-          font-size: 14px;
-          background-color: black;
-          color: white;
-          padding: 0.5em 0.75em;
-          border-radius: 1em;
-          border: none;
-          background-image: url("../img/hartrood.png");
-          background-color: transparent;
-          background-size: cover;
-          text-indent: -999em;
-          margin: 1.5em;
-          width: 5.3em;
-          height: 4em;
-          z-index: 10; }
-        section.active_users div article li #geliked:active, section.active_users div article li #hartje:focus {
-          border: none;
-          outline: none; }
+          margin-bottom: 2.5em;
+          border-radius: 50%; }
   @media (min-width: 768px) {
     section.active_users {
       max-width: 1080px;

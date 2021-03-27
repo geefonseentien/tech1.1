@@ -203,19 +203,18 @@ router.post('/logout', async (req, res) => {
 
 // update route
 router.post('/account/update', upload.single('picture'), urlencodedParser, (req, res) => {
-    // const hash = bcrypt.hashSync(req.body.password, 10)
     const userInfo = {
         userID: req.body.userID,
         name: req.body.name,
         email: req.body.email,
         img: req.file && req.file.filename,
         age: req.body.age,
-        // password: hash,
         area: req.body.area,
         date: req.body.date,
         myGender: req.body.myGender,
         searchGender: req.body.searchGender
     }
+    
 
     const db = client.db(dbName)
 
