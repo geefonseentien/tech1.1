@@ -384,3 +384,25 @@ footer {
   text-align: center; }
   footer p {
     font-weight: 900; }
+
+.fromOverlayOn {
+  display: flex !important; }
+
+#sendMessageForm {
+  display: none;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10em;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10; }
+  #sendMessageForm label {
+    color: white;
+    font-weight: 500; }
+  #sendMessageForm input[type="text"] {
+    user-select: none;
+    pointer-events: none; }
