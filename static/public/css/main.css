@@ -310,7 +310,7 @@ section.active_users {
           margin-bottom: 0; }
         section.active_users div article li img {
           width: 100%;
-          max-height: 10em;
+          max-height: 17em;
           object-fit: cover;
           border-radius: 1em; }
         section.active_users div article li p {
