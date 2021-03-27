@@ -91,9 +91,9 @@ main section {
     color: #fff;
     font-size: 1.8em; }
   main section h2 {
-    font-weight: 900;
+    font-weight: 400;
     color: #fff;
-    font-size: 1.4em; }
+    font-size: 1.2em; }
   main section form input, main section form select {
     padding: 0.75em;
     color: #92a1a9;
@@ -296,14 +296,30 @@ main section {
             background-color: #A21B18; } }
 
 section.active_users {
-  padding: 2em 1em 2em 1em; }
+  padding: 2em 1em; }
   section.active_users h3 {
     flex-basis: 100%;
     text-align: center;
     font-weight: 900;
-    margin-bottom: 1em; }
+    color: white;
+    margin-top: 2em; }
+  section.active_users a {
+    display: flex;
+    justify-content: flex-end;
+    text-decoration: none;
+    align-items: center;
+    margin-bottom: .4em; }
+  section.active_users a img {
+    width: 2em;
+    margin-right: 1em;
+    margin-left: 0.4em; }
   section.active_users div {
-    padding: 1em; }
+    padding: 2em;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 1em;
+    width: 70vw;
+    height: auto;
+    margin: auto; }
     section.active_users div article {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -330,30 +346,51 @@ section.active_users {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      margin: 0 auto; }
+      margin: 0px; }
       section.active_users div article {
-        grid-column-gap: 100px;
+        grid-column-gap: 60px;
         grid-template-columns: 1fr 1fr 1fr; } }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #000;
-  opacity: .2;
-  margin-bottom: 0;
-  max-width: 100%;
-  z-index: 3; }
+section.buttons {
+  display: flex;
+  flex-direction: column-reverse; }
+  section.buttons input {
+    background: none;
+    border: none;
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 900;
+    margin-bottom: 1em; }
 
 footer {
   background-color: #08ADC0;
   color: #fff;
-  padding: 4em;
+  padding: 2em;
   text-align: center; }
   footer p {
     font-weight: 900; }
+
+.fromOverlayOn {
+  display: flex !important; }
+
+#sendMessageForm {
+  display: none;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10em;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10; }
+  #sendMessageForm label {
+    color: white;
+    font-weight: 500; }
+  #sendMessageForm input[type="text"] {
+    user-select: none;
+    pointer-events: none; }
 
 /* Variabelen voor paddings, kleuren etc. */
 /* Variabelen voor paddings, kleuren etc. */
@@ -373,7 +410,7 @@ h2 {
   font-size: 2.4em; }
 
 h3 {
-  font-size: 2.2em; }
+  font-size: 2em; }
 
 h4 {
   font-size: 2.0em; }

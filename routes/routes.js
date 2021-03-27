@@ -207,7 +207,7 @@ router.post('/account/update', upload.single('picture'), urlencodedParser, (req,
         userID: req.body.userID,
         name: req.body.name,
         email: req.body.email,
-        img: req.file.filename,
+        img: req.file && req.file.filename,
         age: req.body.age,
         area: req.body.area,
         date: req.body.date,
@@ -262,12 +262,12 @@ router.post('/like', urlencodedParser, (req, res) => {
     const userInfo = {
         liked: req.body.userID
     }
-    console.log(userInfo.liked)
+
     const db = client.db(dbName)
 
     db.collection('users').updateOne({ userID: req.session.userID }, { $push: {'liked': userInfo.liked}}, (error, succes) => {
         if (succes) {
-            console.log(succes)
+            //console.log(succes)
         } else {
             console.log(error)
         }
@@ -289,12 +289,12 @@ router.get('/geliked', redirectToLogin, (req, res) => {
         for (i=0; i<doc.liked.length; i++) {
             likedArray.push(doc.liked[i])
         }
-        db.collection('users').aggregate([{$match: {userID: {$in: likedArray}}}]).toArray ((err, doc) => {
+        db.collection('users').aggregate([{$match: {userID: {$in: likedArray}}}]).toArray ((err, doc2) => {
             if(doc){
-                res.render('pages/geliked', { users: doc, userID: req.session.userID})
-                console.log(doc)
+                res.render('pages/geliked', { users: doc2, loggedUser: doc, userID: req.session.userID})
+                //console.log(doc)
             }else {
-            console.log(err)
+                console.log(err)
             }
         })
     })
@@ -323,13 +323,13 @@ router.post('/sendMail', urlencodedParser, function (req, res) {
 
         async function sendMail() {
             try{
-                const accessToken = await oAuth2Client.getAccessToken()
+                let accessToken = await oAuth2Client.getAccessToken()
 
-                const transport = nodemailer.createTransport({
+                let transport = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
                         type: 'OAuth2',
-                        user: 'chrisalza28@gmail.com',
+                        user: 'supahkeil.dating@gmail.com',
                         clientId: clientId,
                         clientSecret: clientSecret,
                         refreshToken: refreshToken,
@@ -337,13 +337,15 @@ router.post('/sendMail', urlencodedParser, function (req, res) {
                     }
                 })
 
-                const mailOptions = {
+                let mailOptions = {
                     form: fromMail,
                     to: toMail,
                     subject: 'Hallo vanaf gmail',
                     text: personalMsg,
                     html: '<h1>' + personalMsg + '</h1>',
                 }
+
+                let
 
                 const result = await transport.sendMail(mailOptions)
 
@@ -354,11 +356,9 @@ router.post('/sendMail', urlencodedParser, function (req, res) {
             }
         }
 
-        sendMail().then(result => res.send(result)).catch(error => res.send(error))
+        sendMail().then(result => res.res.sendStatus(200)).catch(error => res.send(error))
     }else{
-        res.send({
-            error: 'Niet genoeg parameters om te voltooien.'
-        })
+        res.sendStatus(500)
     }
 })
 

@@ -9,24 +9,44 @@
     </header>
     <main class="background_img">
         <div class="overlay"></div>
+        <div>
+            <form id="sendMessageForm" method="post" action="/sendMail">
+                <div id="closeFormBtn">X</div>
+                <label for="from">Van:</label>
+                <input id="fromInput" type="text" name="fromMail" value="">
+                <label for="to">Naar:</label>
+                <input id="toInput" type="text" name="toMail" value="">
+                <label for="message">Bericht:</label>
+                <textarea name="personalMsg" id="personalMsg" cols="30" rows="10"></textarea>
+                <input id="submitBtn" type="submit">
+
+            </form>
+        </div>
         <section class="active_users">
             <h3>Deze mensen heb je geliked!</h3>
-            <% users.forEach((users, index) => { %>
-                <li>
-                    <% if(users.img){ %>
-                        <img src="../../uploads/images/<%= users.img %>" alt="user image">
-                        <p><%= users.name %></p>
-                    <% } else{ %>  
-                        <img src="../../img/no-user.png" alt="no user image">
-                        <p><%= users.name %></p>
-                    <% } %>
-                    
-                </li>
-            <% }) %>
+            <a id="" href="/dashboard">Ga verder met liken!<img src="../img/hartrood.png" alt=""></a>
+            <div>
+                <article>
+                    <% users.forEach((users, index) => { %>
+                        <li>
+                            <% if(users.img){ %>
+                                <img src="../../uploads/images/<%= users.img %>" alt="user image">
+                            <% } else{ %>  
+                                <img src="../../img/no-user.png" alt="no user image">
+                            <% } %>
+                            <p><%= users.name %></p>
+                            <p><strong>Leeftijd:</strong> <%= users.age %></p>
+                            <p><strong>Gebied:</strong> <%= users.area %></p>
+                            <button class="sendMessageBtn" data-toEmail="<%= users.email%>" data-fromEmail="<%= loggedUser.email%>">Stuur bericht</button>
+                        </li>
+                    <% }) %>
+                </article>
+            </div>
         </section>
     </main>
     <footer>
         <%- include('../partials/footer'); %>
     </footer>
+    <script defer src="../../js/liked.js"></script>
 </body>
 </html>

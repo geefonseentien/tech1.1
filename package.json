@@ -7,7 +7,7 @@
     "start": "nodemon server.js",
     "sass": "node-sass --watch static/public/sass -o static/public/css"
   },
-  "author": "jelle kitzen",
+  "author": "Team 1.1",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.0.1",

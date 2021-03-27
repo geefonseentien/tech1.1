@@ -11,31 +11,29 @@
         <div class="overlay"></div>
         <section class="active_users">
             <h3>Vind nu je Apres Ski maatje</h3>
+            <a id="" href="/geliked">Liked<img src="../img/hartrood.png" alt=""></a>
             <div>
                 <article>
                     <% users.forEach((users, index) => { %>
                         <li>
                             <% if(users.img){ %>
                                 <img src="../../uploads/images/<%= users.img %>" alt="user image">
-                                <p><%= users.name %></p>
-                            <form action="/like" method="POST">
-                                <input type="hidden" name="userID" value="<%= users.userID %>">
-                                <input type="submit" value="like">
-                            </form>
                             <% } else{ %>  
                                 <img src="../../img/no-user.png" alt="no user image">
-                                <p><%= users.name %></p>
-                            <form action="/like" method="POST">
-                                <input type="hidden" name="userID" value="<%= users.userID %>">
-                                <input type="submit" value="like">
-                            </form>
                             <% } %>
-                            
+                            <p><%= users.name %></p>
+                            <p><strong>Leeftijd:</strong> <%= users.age %></p>
+                            <p><strong>Gebied:</strong> <%= users.area %></p>
+                            <form id="like" action="/like" method="POST">
+                                <input type="hidden" name="userID" value="<%= users.userID %>">
+                                <input id="hartje" type="submit" value="LIKE ME">
+                            </form>
                         </li>
                     <% }) %>
                 </article>
             </div>
         </section>
+        <script src="../js/script.js"></script>
     </main>
     <footer>
         <%- include('../partials/footer'); %>
