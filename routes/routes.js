@@ -225,7 +225,7 @@ router.post('/account/update', upload.single('picture'), urlencodedParser, (req,
         db.collection('users').updateOne({ 'userID': req.body.userID }, { $set: userInfo }, async () => {
             console.log(userInfo.name, 'geupdate')
         })
-        res.render('pages/account', { userInfo: userInfo })
+        res.redirect('/login')
     } catch(err){
         console.error(err)
         res.render('pages/502')
