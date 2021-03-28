@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <title>Matching-applicatie</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Een Matching-applicatie voor Wintersporters/apreski gangers">
+        <meta name="keywords" content="matching-application,matching,html,css,sass,nodejs">
+        <meta name="author" content="Jelle Kitzen">
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">    
+    </head>
+    <body>
+        <main style="width: 600px;">
+            <div style="background-color: #333333;">
+                <h1><img src="https://user-images.githubusercontent.com/32453774/112733066-0cc65180-8f3e-11eb-97fd-d806bd0bd9bd.png" alt="">Supahkeil.</h1>
+                <br>
+                <h2>Je hebt een nieuw bericht</h2>
+            </div>
+            <div style="background: #f6f6f6;">
+                <img src="https://anneliestrox.nl/wp-content/uploads/2018/09/blank-profile-picture.jpg">  
+            </div>
+            <div style="background: #f6f6f6;">
+                <h2><%= user.name %></h2>
+                <p><%= user.myGender + ", " + user.age + " jaar - Skiegebied: " + user.area %></p>
+            </div>
+            <div style="background: #FF4C37; color: #ffffff;">
+                <h2>Bericht:</h2>
+                <p><%= message %></p>
+            </div>
+            <div>
+                <a href="<%= "mailto:" + user.email + "?SUBJECT=Supahkeil dating antwoord"%>">Beantwoord bericht</a>
+            </div>
+        </main>
+        <footer>
+            <p>Matching-application 2021 by Team 1.1</p>
+        </footer>
+    </body>
+</html>
