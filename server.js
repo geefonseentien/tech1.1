@@ -2,7 +2,7 @@ const express = require('express')
 const session = require('express-session')
 const app = express()
 const path = require('path')
-const port = process.env.PORT || 2998
+const port = process.env.PORT || 2997
 const router = require('./routes/routes.js')
 
 //require('./routes/mailFunctie/mail.js')
