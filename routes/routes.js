@@ -138,7 +138,7 @@ router.post('/account', urlencodedParser, async (req, res) => {
                 res.render('pages/account', { userInfo: userInfo })
             } else{
                 console.log('e-mailadres al in gebruik')
-                err_msg = "e-mailadres al in gebruik."
+                err_msg = 'e-mailadres al in gebruik.'
                 return res.render('pages/register', { err_msg: err_msg } )
             }
         })
@@ -165,7 +165,7 @@ router.post('/login', urlencodedParser, async (req, res) => {
             }, async (err, user) => {
                 if (!user) {
                     console.log('Geen gebruiker gevonden met dit e-mailadres')
-                    err_msg = "Geen gebruiker gevonden met dit e-mailadres"
+                    err_msg = 'Geen gebruiker gevonden met dit e-mailadres'
                     return res.render('pages/login', { err_msg: err_msg } )
                 } else {
                     await bcrypt.compare(passwordPost, user.password, (err, result) => {
@@ -175,7 +175,7 @@ router.post('/login', urlencodedParser, async (req, res) => {
                             return res.redirect('/dashboard')
                           } else {
                             console.log('Wachtwoord komt niet overeen met het e-mailadres.')
-                            err_msg = "Wachtwoord komt niet overeen met het e-mailadres."
+                            err_msg = 'Wachtwoord komt niet overeen met het e-mailadres.'
                             return res.render('pages/login', { err_msg: err_msg } )
                           }
                     })
