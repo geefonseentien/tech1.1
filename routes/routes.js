@@ -314,61 +314,63 @@ const oAuth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUrl)
 
 oAuth2Client.setCredentials({refresh_token: refreshToken})
 
+let compiled = ejs.compile(fs.readFileSync(__dirname + '/../views/pages/email.ejs', 'utf8'))
+
 //email verzenden met parameters
-router.post('/sendMail', urlencodedParser, function (req, res) {
-    const db = client.db(dbName)
+router.post('/sendMail', urlencodedParser, (req, res) => {
+        const db = client.db(dbName)
 
-    let emailHtml
+        let emailHtml
+        let fromMail = req.body.fromMail
+        let toMail = req.body.toMail
+        let personalMsg = req.body.personalMsg
+        
+        db.collection('users').findOne({ userID: req.session.userID }, async (err, doc) => {
+            if(doc) {
+                emailHtml = await compiled({ user: doc, message: personalMsg })
 
-    let compiled = ejs.compile(fs.readFileSync(__dirname + '/../views/pages/email.ejs', 'utf8'))
-    db.collection('users').findOne({ userID: req.session.userID }, async (err, doc) => {
-       emailHtml = await compiled({ user: doc, message: personalMsg })
-    })
+                if (fromMail && toMail && personalMsg) {
 
-    var fromMail = req.body.fromMail
-    var toMail = req.body.toMail
-    var personalMsg = req.body.personalMsg
-
-    if(fromMail && toMail && personalMsg) {
-
-        async function sendMail() {
-            try{
-                
-                let accessToken = await oAuth2Client.getAccessToken()
-
-                let transport = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                        type: 'OAuth2',
-                        user: 'supahkeil.dating@gmail.com',
-                        clientId: clientId,
-                        clientSecret: clientSecret,
-                        refreshToken: refreshToken,
-                        accessToken: accessToken
+                    const sendMail = async () => {
+                        try {
+        
+                            let accessToken = await oAuth2Client.getAccessToken()
+        
+                            let transport = nodemailer.createTransport({
+                                service: 'gmail',
+                                auth: {
+                                    type: 'OAuth2',
+                                    user: 'supahkeil.dating@gmail.com',
+                                    clientId: clientId,
+                                    clientSecret: clientSecret,
+                                    refreshToken: refreshToken,
+                                    accessToken: accessToken
+                                }
+                            })
+        
+                            let mailOptions = {
+                                form: fromMail,
+                                to: toMail,
+                                subject: 'Hallo vanaf gmail',
+                                text: personalMsg,
+                                html: emailHtml,
+                            }
+        
+                            const result = await transport.sendMail(mailOptions)
+        
+                            return result
+        
+                        } catch (error) {
+                            return error
+                        }
                     }
-                })
-
-                let mailOptions = {
-                    form: fromMail,
-                    to: toMail,
-                    subject: 'Je hebt een nieuw bericht',
-                    text: personalMsg,
-                    html: emailHtml,
+        
+                    sendMail().then(result => res.res.sendStatus(200)).catch(error => res.send(error));
+                } else {
+                    res.sendStatus(500)
                 }
-
-                const result = await transport.sendMail(mailOptions)
-
-                return result
-
-            }catch(error) {
-                return error
             }
-        }
-
-        sendMail().then(result => res.res.sendStatus(200)).catch(error => res.send(error))
-    }else{
-        res.sendStatus(500)
-    }
+        })
 })
 
 
