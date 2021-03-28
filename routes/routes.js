@@ -1,5 +1,7 @@
 const express = require('express')
 const session = require('express-session')
+const fs = require('fs');
+const ejs = require('ejs');
 const router = express.Router()
 
 const bodyParser = require('body-parser')
@@ -314,6 +316,14 @@ oAuth2Client.setCredentials({refresh_token: refreshToken})
 
 //email verzenden met parameters
 router.post('/sendMail', urlencodedParser, function (req, res) {
+    const db = client.db(dbName)
+
+    let emailHtml
+
+    let compiled = ejs.compile(fs.readFileSync(__dirname + '/../views/pages/email.ejs', 'utf8'))
+    db.collection('users').findOne({ userID: req.session.userID }, async (err, doc) => {
+       emailHtml = await compiled({ user: doc, message: personalMsg })
+    })
 
     var fromMail = req.body.fromMail
     var toMail = req.body.toMail
@@ -323,6 +333,7 @@ router.post('/sendMail', urlencodedParser, function (req, res) {
 
         async function sendMail() {
             try{
+                
                 let accessToken = await oAuth2Client.getAccessToken()
 
                 let transport = nodemailer.createTransport({
@@ -340,18 +351,16 @@ router.post('/sendMail', urlencodedParser, function (req, res) {
                 let mailOptions = {
                     form: fromMail,
                     to: toMail,
-                    subject: 'Hallo vanaf gmail',
+                    subject: 'Je hebt een nieuw bericht',
                     text: personalMsg,
-                    html: '<h1>' + personalMsg + '</h1>',
+                    html: emailHtml,
                 }
-
-                let
 
                 const result = await transport.sendMail(mailOptions)
 
                 return result
 
-            }catch(error){
+            }catch(error) {
                 return error
             }
         }
