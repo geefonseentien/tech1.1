@@ -63,7 +63,7 @@ Voor meer informatie over de vooruitgang van dit project bekijk onze [wiki](http
 
 ## License
 
-De Matching-application maakt gebruik van een MIT license, voor meer informatie bekijk de [License](https://github.com/jellekitz/Matching-application/blob/master/LICENSE).
+De Matching-application maakt gebruik van een MIT license, voor meer informatie bekijk de [License](https://github.com/geefonseentien/tech1.1/blob/main/LICENSE).
 
 ## Bronnen
 
