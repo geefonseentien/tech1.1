@@ -36,7 +36,8 @@ Om de applicatie werkend te krijgen dienen hier een aantal stappen uitgevoerd te
   - SESSION_SECRET = voeg hier een secret key aan toe, deze kan het best bestaan uit verschillende cijfers en letters door elkaar, zodat het niet eenvoudig geraden kan worden.
   - SESSION_NAME = geef een naam mee aan de session
   - SESSION_LIFETIME = 1000 * 60 * 60 * 2
-  - 
+
+
 Om de Google api te gebruiken heb je een aantal tokens nodig. Deze kan je aanmaken op https://console.cloud.google.com/apis/dashboard.
   - CLIENT_ID = Deze krijg je wanneer je een nieuw project hebt aangemaakt met de google api
   - CLIENT_SECRET = Deze krijg je wanneer je een nieuw project hebt aangemaakt met de google api
