@@ -57,6 +57,9 @@ De Matching-application draait op localhost:2997, voer deze in in de adres-balk 
 
 Voor eventuele vragen over installatie of andere zaken neem contact op met een van de **Authors** via jellekitz@gmail.com, lotte.koblens@hva.nl, christiaan.zandbergen@hva.nl, zara.schriever@hva.nl, sam.boot@hva.nl.
 
+## Live version met Digital Ocean
+https://matchingapplication-8vspe.ondigitalocean.app/
+
 ## Documentation
 
 Voor meer informatie over de vooruitgang van dit project bekijk onze [wiki](https://github.com/geefonseentien/tech1.1/wiki).
