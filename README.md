@@ -81,4 +81,8 @@ De Matching-application maakt gebruik van een MIT license, voor meer informatie 
 
 - mongoDB. (z.d.). MongoDB Node Driver — Node.js. mongodb.com. Geraadpleegd op 7 maart 2021, van https://docs.mongodb.com/drivers/node/
 
+- mongoDB. (z.d.). Db.collection.aggregate() — MongoDB Manual. Geraadpleegd van https://docs.mongodb.com/manual/reference/method/db.collection.aggregate/
+
+- mongoDB. (z.d.-a). $match (aggregation) — MongoDB Manual. Geraadpleegd van https://docs.mongodb.com/manual/reference/operator/aggregation/match/
+
 - & Lesstof en informatie opgedaan door student assistenten.
