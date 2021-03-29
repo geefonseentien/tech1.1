@@ -59,7 +59,7 @@ Voor eventuele vragen over installatie of andere zaken neem contact op met een v
 
 ## Documentation
 
-Voor meer informatie over de vooruitgang van dit project bekijk onze [wiki](https://github.com/geefonseentien/tech1.1/wiki)
+Voor meer informatie over de vooruitgang van dit project bekijk onze [wiki](https://github.com/geefonseentien/tech1.1/wiki).
 
 ## License
 
