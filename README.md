@@ -47,7 +47,7 @@ Om de applicatie werkend te krijgen dienen hier een aantal stappen uitgevoerd te
 
 5. Start de Matching-application
 
-```npm start```
+```npm run start```
 
 ### Usage
 
