@@ -11,6 +11,7 @@ Een applicatie voor het samenbrengen van mensen op wintersport, die gezamenlijk 
   - [Installation](#installation)
   - [Usage](#usage)
 - [Questions](#questions)
+- [Live versions](#live-version-met-Digital-Ocean)
 - [Documentation](#documentation)
 - [Licence](#license)
 - [Bronnen](#bronnen)
