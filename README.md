@@ -51,9 +51,7 @@ Om de applicatie werkend te krijgen dienen hier een aantal stappen uitgevoerd te
 
 ### Usage
 
-De Matching-application draait op localhost:3000, voer deze in in de adres-balk van uw browser.
-
-![Adres-balk](https://user-images.githubusercontent.com/15923433/110255443-0888c300-7f94-11eb-9b58-81600abef2af.png "Adres-balk")
+De Matching-application draait op localhost:2997, voer deze in in de adres-balk van uw browser.
 
 ## Questions
 
