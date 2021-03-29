@@ -3,7 +3,7 @@
 ![Apres ski](https://user-images.githubusercontent.com/15923433/107362901-aeeac100-6ad9-11eb-9e5b-a44d2ba61b38.jpg "Apres ski")<br>
 Bron: cn traveler. (z.d.). Apres ski [Foto]. cntraveler.com. https://www.cntraveler.com/story/an-international-guide-to-the-world-of-apres-ski<br>
 
-Een applicatie voor het samenbrengen van mensen op wintersport, die gezamenlijk de apres ski in kunnen duiken. Wintersporters kunnen door middel van deze app een account aanmaken en deze updaten en deleten. De app is gemaakt voor mobiel maar is ook operationeel voor desktop gebruikers.
+Een applicatie voor het samenbrengen van mensen op wintersport, die gezamenlijk de apres ski in kunnen duiken. Wintersporters kunnen door middel van deze app elkaar liken en contact met elkaar opnemen. De app is gemaakt voor mobiel.
 
 ## Table of content
 
@@ -23,13 +23,22 @@ Om de applicatie werkend te krijgen dienen hier een aantal stappen uitgevoerd te
 
 1. Clone deze repo
 
-```Git clone https://github.com/jellekitz/Matching-application.git```
+```Git clone https://github.com/geefonseentien/tech1.1.git```
 
 2. Navigeer naar de hoofdmap van de Matching-application
 
 ```cd Matching-application/```
 
-3. Plaats de .env folder in de root (hoofdmap) van de Matching-application
+3. Plaats de .env folder in de root (hoofdmap) van de Matching-application en voeg er de volgende environment variabelen aan toe:
+  - MONGODB_URL = voeg hier de url toe van uw MongoDB database
+  - DB_NAME = voeg hier de naam toe van uw MongoDB database
+  - SESSION_SECRET = voeg hier een secret key aan toe, deze kan het best bestaan uit verschillende cijfers en letters door elkaar, zodat het niet eenvoudig geraden kan worden.
+  - SESSION_NAME = geef een naam mee aan de session
+  - SESSION_LIFETIME = 1000 * 60 * 60 * 2
+  - CLIENT_ID =
+  - CLIENT_SECRET =
+  - REDIRECT_URI =
+  - REFRESH_TOKEN =
 
 
 4. Installeer de NPM-packages
@@ -48,11 +57,11 @@ De Matching-application draait op localhost:3000, voer deze in in de adres-balk 
 
 ## Questions
 
-Voor eventuele vragen over installatie of andere zaken neem contact op met de **Author** via jellekitz@gmail.com
+Voor eventuele vragen over installatie of andere zaken neem contact op met een van de **Authors** via jellekitz@gmail.com, lotte.koblens@hva.nl, christiaan.zandbergen@hva.nl, zara.schriever@hva.nl, sam.boot@hva.nl.
 
 ## Documentation
 
-Voor meer informatie over de vooruitgang van dit project bekijk mijn [wiki](https://github.com/jellekitz/Matching-application/wiki)
+Voor meer informatie over de vooruitgang van dit project bekijk onze [wiki](https://github.com/jellekitz/Matching-application/wiki)
 
 ## License
 
